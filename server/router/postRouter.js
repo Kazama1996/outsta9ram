@@ -4,9 +4,18 @@ const authController = require("../controller/authController");
 const router = express.Router();
 
 router.use(authController.protect);
+//Create a post
+router.route("/:profileName").get(postController.getAllPost);
+
 router
-  .route("/")
-  .post(postController.uploadPostPhoto, postController.createPost);
+  .route("/:profileName/:postId?")
+  .all(authController.isolated)
+  .post(postController.uploadPostPhoto, postController.createPost)
+  .patch(postController.updatePost)
+  .delete(postController.deletePost);
+
+router.route("/:profileName/:postId/like", postController.likePost);
+router.route("/:profileName/:postId/cancelLike", postController.cancelLike);
 
 //router.post("/test", postController.uploadPostPhoto, postController.test);
 

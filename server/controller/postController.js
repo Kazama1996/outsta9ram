@@ -2,7 +2,7 @@ const crudController = require("./crudController");
 const Post = require("../model/postModel");
 const AppError = require("../utils/appError");
 const MetaData = require("../model/metadataModel");
-
+const Like = require("../model/likeModel");
 const multer = require("multer");
 
 const multerStorage = multer.diskStorage({
@@ -31,7 +31,23 @@ exports.uploadPostPhoto = upload.single("photo");
 exports.createPost = crudController.createOne(Post);
 exports.updatePost = crudController.updateOne(Post);
 exports.deletePost = crudController.deleteOne(Post);
-
+exports.getAllPost = crudController.getAll(Post);
+// Like post
+exports.likePost = async (req, res, next) => {
+  const Like = await Like.create({
+    postId: req.params.postId,
+    userId: req.user.id,
+  });
+  res.status(200).send(`${req.user.profileName} likes your post`);
+};
+// dislike post
+exports.cancelLike = async (req, res, next) => {
+  const cancel = await Like.findOneAndDelete({
+    userId: req.userId,
+    postId: req.params.Id,
+  });
+  res.status(200).send(`${req.user.profileName} cancel the likes to your post`);
+};
 // this is for crearte post.
 exports.test = async (req, res, next) => {
   req.body.time = Date.now();

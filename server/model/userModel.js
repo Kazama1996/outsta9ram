@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const AppError = require("../utils/appError");
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -10,9 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userName: {
+  profileName: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -20,8 +22,11 @@ const userSchema = new mongoose.Schema({
     minLength: 8,
     select: false,
   },
+  createdAt: Date,
   passwordChangeAt: Date,
 });
+
+userSchema.index({ profileName: 1 });
 
 userSchema.methods.correctPassword = async function (password, userPassowrd) {
   return await bcrypt.compare(password, userPassowrd);
@@ -34,6 +39,16 @@ userSchema.methods.changePasswordAfter = (JWTtimeStamp) => {
   }
   return false;
 };
+
+userSchema.pre("/^find/", function (req, res, next) {
+  // if (req.user.profileName !== req.params.profileName) {
+  //   return next(
+  //     new AppError("You can't not modify the things not belong to you", 401)
+  //   );
+  // }
+  console.log(req.user);
+  next();
+});
 
 userSchema.pre("save", async function (next) {
   const salt = bcrypt.genSaltSync(10);

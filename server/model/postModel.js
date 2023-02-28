@@ -1,16 +1,18 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  createdBy: {
-    type: mongoose.ObjectId,
+  photoId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "MetaData",
+    //required: true,
+  },
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
     //required: true,
   },
   content: {
     type: String,
-  },
-  photoId: {
-    type: mongoose.ObjectId,
-    //required: true,
   },
   createdAt: Date,
 });

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const metadataSchema = new mongoose.Schema({
-  path: String,
+  filePath: String,
   originalname: String,
 });
 

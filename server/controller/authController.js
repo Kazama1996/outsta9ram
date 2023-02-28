@@ -43,7 +43,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
   //send JWT token
   sendJWTToken(200, user, res);
-  next();
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -76,4 +75,11 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 exports.test = (req, res, next) => {
   res.status(200).send(req.user);
+};
+
+exports.isolated = (req, res, next) => {
+  if (req.params.profileName !== req.user.profileName) {
+    return next(new AppError("You are not allow to access", 401));
+  }
+  next();
 };

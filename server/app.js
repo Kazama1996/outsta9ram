@@ -27,9 +27,9 @@ mongoose.connect(DB).then(
 app.use(cookieParser());
 
 app.use(express.json());
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/post", postRouter);
-app.use("/api/v1/comment", commentRouter);
+app.use(userRouter);
+app.use(postRouter);
+app.use(commentRouter);
 
 app.use(errorHandler);
 
