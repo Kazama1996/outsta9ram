@@ -7,9 +7,12 @@ const router = express.Router();
 router.use(authController.protect);
 //router.get("/:postId", commentController.getAllComment);
 
-router
-  .route("/:profileName?/:postId/:commentId?")
-  .post(commentController.createComment)
-  .get(commentController.getAllComment);
+router.post("/postId", commentController.createComment);
+router.get("/postId", commentController.getAllComment);
+
+// router
+//   .route("/:profileName?/:postId/:commentId?")
+//   .post(commentController.createComment)
+//   .get(commentController.getAllComment);
 
 module.exports = router;

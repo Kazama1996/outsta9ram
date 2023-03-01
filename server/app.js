@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(userRouter);
 app.use(postRouter);
-app.use(commentRouter);
+//app.use(commentRouter);
 
 app.use(errorHandler);
 

@@ -43,24 +43,9 @@ exports.likePost = async (req, res, next) => {
 // dislike post
 exports.cancelLike = async (req, res, next) => {
   const cancel = await Like.findOneAndDelete({
-    userId: req.userId,
     postId: req.params.Id,
+    userId: req.userId,
   });
   res.status(200).send(`${req.user.profileName} cancel the likes to your post`);
 };
 // this is for crearte post.
-exports.test = async (req, res, next) => {
-  req.body.time = Date.now();
-  console.log(req.body);
-
-  const newMeta = await MetaData.create({ path: req.file.path });
-
-  const doc = await Post.create({
-    createdById: req.user._id,
-    caption: req.body.caption,
-    photoId: newMeta._id,
-    createAt: Date.now(),
-  });
-
-  res.status(200).send("success");
-};
