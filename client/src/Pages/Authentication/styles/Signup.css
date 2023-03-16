@@ -8,13 +8,7 @@
     text-align: center;
   }
   
-  body {
-    font-family: Roboto;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
   .signup input {
     transform: translate(0px, 150px);
     display: block;
@@ -39,12 +33,3 @@
     cursor: pointer;
     color: #ffffff;
   }
-
-  .signup .btn_register {
-    width: 150px;
-    border: 2px solid #4db5f9;
-    background-color: #4db5f9;
-    cursor: pointer;
-    color: #ffffff;
-  }
-  
