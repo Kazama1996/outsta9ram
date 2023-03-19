@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { userRouter } from "./router/userRouter.js";
+import { postRouter } from "./router/postRouter.js";
 import { errorHandler } from "./utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -28,6 +29,8 @@ mongoose.connect(DB).then(
 );
 app.use(express.json());
 app.use(userRouter);
+app.use(postRouter);
+
 app.use(errorHandler);
 app.listen(process.env.PORT, () => {
   console.log(`listen to port ${process.env.PORT}`);

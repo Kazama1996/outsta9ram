@@ -1,15 +1,12 @@
-function InputField(props, { setData }) {
+function InputField(props) {
   const str = props.placeholder;
-  const handleChange = (e) => {
-    props.setData(e.target.value);
-  };
   return (
     <input
       type={props.type}
       placeholder={str}
       onFocus={(e) => (e.target.placeholder = "")}
       onBlur={(e) => (e.target.placeholder = str)}
-      onChange={handleChange}
+      ref={props.reference}
     ></input>
   );
 }

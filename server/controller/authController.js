@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { AppError } from "../utils/appError.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import bcrypt from "bcrypt";
+import { promisify } from "util";
 const generateJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIREIN,
@@ -19,6 +20,7 @@ const setJWTCookie = function (statusCode, user, res) {
     ),
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
   res.cookie("jwt", token, cookieOptions);
   res.status(statusCode).send("Send JWT via cookie");
@@ -36,24 +38,41 @@ export const login = catchAsync(async (req, res, next) => {
   }
   const user = await User.findOne({ email: email });
   if (!user) {
-    return next(new AppError("User with this email could not found", 201));
+    return next(new AppError("User with this email could not found", 401));
   }
 
   if (!(await bcrypt.compare(password, user.password))) {
     return next(new AppError("Invalid email or password", 400));
   }
-
-  res.send("hello world2");
+  setJWTCookie(200, user, res);
 });
 
 export const protect = async (req, res, next) => {
+  // Retrieve jwt token from cookie.
   const { jwt: jwtCookie } = req.cookies;
-  const decoded = await jwt.verify(jwtCookie, process.env.JWT_SECRET);
-  const user = await User.findById(decoded.id);
-  console.log(user);
+
+  // Verify jwt token to get the  user's id of this request.
+  const decoded = await promisify(jwt.verify)(
+    jwtCookie,
+    process.env.JWT_SECRET
+  );
+  if (!decoded) {
+    return next(new AppError("Invalid token Please login again", 401));
+  }
+  // Query DB there has an id belong to this request.
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next(new AppError("User could not found", 404));
+  }
+
+  // Check whether user is change his/her password.
+  if (currentUser.checkJWTExpire(currentUser.iat)) {
+    return next(new AppError("Your token is expire please login again"));
+  }
+  req.user = currentUser;
   next();
 };
 
 export const result = (req, res, next) => {
-  res.status(200).send("success");
+  res.status(200).send(req.user);
 };

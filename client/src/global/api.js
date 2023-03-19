@@ -13,6 +13,10 @@ export const login = function (data) {
   return instance.post("login", data, customConfig);
 };
 
-export const protect = function (data) {
-  return instance.get("protect", data, customConfig);
+export const createPost = async function (data) {
+  return instance.get("/api/upload", customConfig);
+};
+
+export const protect = async function () {
+  return instance.get("/api/protect", customConfig);
 };

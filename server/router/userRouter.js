@@ -10,4 +10,6 @@ const userRouter = express.Router();
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.get("/protect", protect, result);
+userRouter.get("/api/protect", protect, result);
+
 export { userRouter };

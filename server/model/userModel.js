@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema({
   createAt: {
     type: Date,
   },
+  changePasswordAt: {
+    type: Date,
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -32,6 +35,14 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
+
+userSchema.methods.checkJWTExpire = function (iatTime) {
+  let changeTimestamp = 0;
+  if (this.changePasswordAt) {
+    changeTimestamp = this.changePasswordAt.getTime() / 1000;
+  }
+  return changeTimestamp > iatTime ? true : false;
+};
 
 const User = mongoose.model("User", userSchema);
 

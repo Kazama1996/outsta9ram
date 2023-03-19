@@ -6,7 +6,8 @@ import { Navigate } from "react-router-dom";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Sidebar from "./component/Slidebar";
+import Sidebar from "./component/Sidebar";
+import PostEditor from "./component/PostEditor";
 
 const ProtectedRoute = ({ isLogin, redirectPath = "/landing", children }) => {
   if (!isLogin) {
@@ -20,7 +21,7 @@ function App() {
   return (
     <Sidebar>
       <Routes>
-        <Route path="/" element={<Feed />}></Route>
+        <Route path="/" element={<Feed />} />
       </Routes>
     </Sidebar>
   );
