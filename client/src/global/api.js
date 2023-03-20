@@ -13,8 +13,21 @@ export const login = function (data) {
   return instance.post("login", data, customConfig);
 };
 
-export const createPost = async function (data) {
+export const getPreSignUrl = function () {
   return instance.get("/api/upload", customConfig);
+};
+
+export const uploadImage = function (preSignUrl, file) {
+  return instance.put(preSignUrl, file, {
+    headers: {
+      "Content-Type": file.type,
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+};
+
+export const createPost = function (data) {
+  return instance.put("/api/post", data, customConfig);
 };
 
 export const protect = async function () {
