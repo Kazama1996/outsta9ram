@@ -1,12 +1,13 @@
 import InputField from "./InputField";
 import { useRef, useState } from "react";
 import { login } from "../global/api";
+import Modal from "react-modal";
+
 function Login(props) {
-  //const [email, setEmail] = new useState("");
-  //const [password, setPassword] = new useState("");
-  const { isLogin, setIsLogin } = props;
+  const { isOpenLoginPage, setIsOpenLoginPage } = props;
   const email = useRef(null);
   const password = useRef(null);
+
   const submitLogin = async function () {
     const reqBody = {
       email: email.current.value,
@@ -14,15 +15,20 @@ function Login(props) {
     };
     await login(JSON.stringify(reqBody))
       .then((response) => {
-        setIsLogin(true);
+        setIsOpenLoginPage(false);
       })
       .catch((error) => {
-        setIsLogin(false);
+        setIsOpenLoginPage(true);
+        console.log(error);
       });
   };
 
   return (
-    <div className="loginPage" style={{ display: isLogin ? "none" : "block" }}>
+    <Modal
+      isOpen={isOpenLoginPage}
+      className="popupWindow-login"
+      ariaHideApp={false}
+    >
       <h2>Please log in for more experience</h2>
       <div>
         <InputField type={"text"} placeholder={"Email"} reference={email} />
@@ -34,10 +40,9 @@ function Login(props) {
           reference={password}
         />
       </div>
-      <div>
-        <button onClick={submitLogin}> Login</button>
-      </div>
-    </div>
+
+      <button onClick={submitLogin}>Login</button>
+    </Modal>
   );
 }
 

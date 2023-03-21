@@ -1,11 +1,7 @@
 import { useState } from "react";
-
+import Login from "../../component/Login";
 function Feed() {
-  return (
-    <div className="pageContent">
-      <h1>This is feed</h1>
-    </div>
-  );
+  return <div className="page-feed"></div>;
 }
 
 export default Feed;

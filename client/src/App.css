@@ -1,5 +1,5 @@
-.container{
-  display:flex;
+/* .container{
+  display: flex;
 }
 
 .option{
@@ -11,10 +11,13 @@
   margin-bottom:200px;
 }
 
-main{
-  display: inline-block;
-  width: 100%;
+.page{
+  width:100vw;
+  height:100vh;
   background-color: brown;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .select{
@@ -70,4 +73,133 @@ main{
 }
 .btn-Post{
   margin-left: 50%;
+}
+.profile{
+  width:100vw;
+  height:100vh;
+  background-color: orange;
+  display: inline-block;
+
+}
+.profile-header{
+  width:100vw;
+  height:20vh;
+  display: inline-block;
+  background-color: blue;
+}
+
+.profile-content{
+  width:100vw;
+  height:100vw;
+  background-color: green;
+}
+
+.profile-avatar{
+  width:30vw;
+  height:30vw;
+  background-color: yellow;
+}
+.profile-property{
+  width:70vw;
+  height:3vw;
+  background-color: pink;
+} */
+
+.app{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: aqua;
+}
+.sidebar{
+  display: grid;
+  height: 100vh;
+  background-color: red;
+}
+
+.page-feed{
+  display: flex;
+  width: 100vw;
+  height:100vh;
+  background-color: brown;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-profile{
+  background-color: cyan;
+  width: 100vw;
+  height:100vh;
+}
+.header-profile{
+  display: flex;
+  width:100vw;
+  height:20vh;
+  background-color: navy;
+}
+.avatar-region{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:25%;
+  height:100%;
+  background-color: burlywood;
+}
+.user-info{
+  display: flex;
+  height:100%;
+  width:75%;
+  background-color: coral;
+}
+
+.loginPage{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:600px;
+  height:400px;
+  background-color: purple;
+}
+
+.pages{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ReactModal__Overlay{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+.postEditor{
+  display: flex;
+  width:600px;
+  height:400px;
+  background-color: purple;
+}
+.imageWindow{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:65%;
+  height:100%;
+  background-repeat: no-repeat;  
+  background-position: 0% 0%;
+  background-size: 100% 100%;
+}
+
+.typeField{
+  height:80%;
+  width: 221px;
+}
+
+.btn-post{
+  margin-left: 50%;
+}
+
+.userPhoto{
+  width:150px;
+  height:150px;
+  border-radius: 99em;
 }

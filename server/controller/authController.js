@@ -50,6 +50,9 @@ export const login = catchAsync(async (req, res, next) => {
 export const protect = async (req, res, next) => {
   // Retrieve jwt token from cookie.
   const { jwt: jwtCookie } = req.cookies;
+  if (!jwtCookie) {
+    return next(new AppError("You are not login, Please login", 404));
+  }
 
   // Verify jwt token to get the  user's id of this request.
   const decoded = await promisify(jwt.verify)(
