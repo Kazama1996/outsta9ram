@@ -14,7 +14,7 @@ export const login = function (data) {
 };
 
 export const getPreSignUrl = function () {
-  return instance.get("/api/upload", customConfig);
+  return instance.get("/api/preSignUrl", customConfig);
 };
 
 export const uploadImage = function (preSignUrl, file) {
@@ -27,7 +27,7 @@ export const uploadImage = function (preSignUrl, file) {
 };
 
 export const createPost = function (data) {
-  return instance.put("/api/post", data, customConfig);
+  return instance.post("/api/post", data, customConfig);
 };
 
 export const protect = async function () {
