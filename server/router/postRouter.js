@@ -4,6 +4,8 @@ import {
   createPost,
   likePost,
   cancelLikePost,
+  getAllPostByUser,
+  createComment,
 } from "../controller/postController.js";
 import express from "express";
 
@@ -14,5 +16,6 @@ postRouter.post("/api/post", protect, createPost);
 
 postRouter.post("/api/like/:postId", protect, likePost);
 postRouter.delete("/api/like/:postId", protect, cancelLikePost);
-
+postRouter.get("/api/post/:profileName", protect, getAllPostByUser);
+postRouter.post("/api/comment/:postId", protect, createComment);
 export { postRouter };

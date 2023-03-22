@@ -11,7 +11,7 @@ const commentSchema = new mongoose.Schema({
     type: Date,
   },
   content: {
-    type: Date,
+    type: String,
   },
 });
 
