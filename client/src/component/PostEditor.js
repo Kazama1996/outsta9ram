@@ -84,14 +84,13 @@ function PostEditor(props) {
 
   const handleClick = async function (e) {
     if (e.target.id === "done") {
-      //call create post api;
-      console.log(postContent.current.value);
-
       let reqBody = {};
+      console.log("ASDASd");
       try {
         const {
           data: { KEY, clientUrl },
         } = await getPreSignUrl();
+        console.log(KEY, clientUrl);
         await uploadImage(clientUrl, file);
         reqBody = {
           content: postContent.current.value,

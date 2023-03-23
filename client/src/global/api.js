@@ -31,5 +31,8 @@ export const createPost = function (data) {
 };
 
 export const protect = async function () {
-  return instance.get("/api/protect", customConfig);
+  return instance.get("/api/protectRoute", customConfig);
+};
+export const getUserProfile = function (user) {
+  return instance.get(`/api/${user}`, customConfig);
 };

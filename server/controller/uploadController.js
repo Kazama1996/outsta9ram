@@ -3,6 +3,7 @@ import {
   getSignedUrl,
   S3RequestPresigner,
 } from "@aws-sdk/s3-request-presigner";
+import { catchAsync } from "../utils/catchAsync.js";
 import { v4 } from "uuid";
 
 const createPresignUrlWithClient = async ({ region, bucket, key }) => {
@@ -30,5 +31,5 @@ export const getPreSignUrl = async (req, res) => {
     bucket: BUCKET,
     key: KEY,
   });
-  res.send({ KEY, clientUrl });
+  res.status(200).send({ KEY, clientUrl });
 };

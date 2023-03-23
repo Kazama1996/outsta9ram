@@ -16,6 +16,7 @@ const userRouter = express.Router();
 // auth
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
+userRouter.get("/api/protectRoute", protect, result);
 // profile
 userRouter.get("/api/:profileName", protect, getUserProfile);
 

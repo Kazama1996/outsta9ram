@@ -28,8 +28,8 @@ mongoose.connect(DB).then(
   }
 );
 app.use(express.json());
-app.use(userRouter);
 app.use(postRouter);
+app.use(userRouter);
 
 app.use(errorHandler);
 app.listen(process.env.PORT, () => {

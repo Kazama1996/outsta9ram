@@ -59,6 +59,7 @@ export const protect = async (req, res, next) => {
     jwtCookie,
     process.env.JWT_SECRET
   );
+
   if (!decoded) {
     return next(new AppError("Invalid token Please login again", 401));
   }
@@ -73,6 +74,7 @@ export const protect = async (req, res, next) => {
     return next(new AppError("Your token is expire please login again"));
   }
   req.user = currentUser;
+
   next();
 };
 

@@ -14,7 +14,10 @@ export const getUserProfile = async (req, res, next) => {
         let: { userId: "$_id" },
         pipeline: [
           { $match: { $expr: { $eq: ["$$userId", "$userId"] } } },
-          { $project: { _id: 1 } },
+          {
+            $sort: { createdAt: -1 },
+          },
+
           {
             $lookup: {
               from: "likes",
@@ -37,6 +40,7 @@ export const getUserProfile = async (req, res, next) => {
           },
           {
             $project: {
+              photoPath: 1,
               LikeQuantity: { $size: "$Likes" },
               CommentQuantity: { $size: "$Comments" },
             },
@@ -45,6 +49,7 @@ export const getUserProfile = async (req, res, next) => {
         as: "Posts",
       },
     },
+
     {
       $lookup: {
         from: "followers",
