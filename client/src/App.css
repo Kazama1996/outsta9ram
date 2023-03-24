@@ -250,9 +250,7 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.overlay div{
-  color:red;
-}
+
 
 .postWindow{
   display: flex;

@@ -36,3 +36,6 @@ export const protect = async function () {
 export const getUserProfile = function (user) {
   return instance.get(`/api/${user}`, customConfig);
 };
+export const getPostAttribute = function (postId) {
+  return instance.get(`/api/p/${postId}`, customConfig);
+};
