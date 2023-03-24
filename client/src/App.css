@@ -172,12 +172,12 @@
   justify-content:center;
   align-items: center;
 }
-.postEditor{
+/* .postEditor{
   display: flex;
   width:600px;
   height:400px;
   background-color: purple;
-}
+} */
 .imageWindow{
   display: flex;
   justify-content: center;
@@ -251,8 +251,27 @@
 }
 
 .overlay div{
-  margin:15px;
   color:red;
+}
+
+.postWindow{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: green;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+}
+.postWindow-overlay{
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 

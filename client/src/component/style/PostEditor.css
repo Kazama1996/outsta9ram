@@ -1,0 +1,33 @@
+.editor-post{
+    display: flex;
+    position: absolute;
+    width:600px;
+    height:400px;
+    background-color: green;
+  }
+
+  .window-preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:65%;
+    height:100%;
+    background-repeat: no-repeat;  
+    background-position: 0% 0%;
+    background-size: 100% 100%;
+  }
+  .input-postcontent{
+    height:80%;
+    width: 221px;
+  }
+  .btn-post{
+    margin-left: 50%;
+  }
+  .editor-post-overlay{
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }

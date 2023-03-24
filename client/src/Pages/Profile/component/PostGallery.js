@@ -1,8 +1,19 @@
+import { useState } from "react";
+import PostWindow from "../../../component/PostWindow";
+import Modal from "react-modal";
+
 function PostGallery(props) {
   const posts = props.posts;
-  const handleClick = function (e) {
+  const [isDisplayPostWindow, setIsDisPlayPostWindow] = useState(false);
+
+  const handleClick = (e) => {
     console.log(e.target.id);
+    setIsDisPlayPostWindow(true);
   };
+  const closeModal = (e) => {
+    setIsDisPlayPostWindow(false);
+  };
+
   if (!posts.length) return <h3>Loading...</h3>;
   return (
     <div className="gallery">
@@ -14,8 +25,9 @@ function PostGallery(props) {
               backgroundImage: `url(${`https://outsta9ram-bucket.s3.ap-northeast-1.amazonaws.com/${post.photoPath}`})`,
             }}
             onClick={handleClick}
+            key={post._id}
           >
-            <div className="overlay" id={post._id}>
+            <div className="overlay" id={post._id} onClick={handleClick}>
               <div>
                 <h3>{`Likes:${post.LikeQuantity}`}</h3>
               </div>
@@ -26,6 +38,10 @@ function PostGallery(props) {
           </div>
         );
       })}
+      <PostWindow
+        isDisplayPostWindow={isDisplayPostWindow}
+        closeModal={closeModal}
+      />
     </div>
   );
 }
