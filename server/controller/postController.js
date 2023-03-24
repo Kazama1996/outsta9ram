@@ -4,7 +4,7 @@ import { Like } from "../model/likeModel.js";
 import { Comment } from "../model/commentModel.js";
 import { User } from "../model/userModel.js";
 import { AppError } from "../utils/appError.js";
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 export const createPost = catchAsync(async (req, res, next) => {
   req.body.createdAt = Date.now();
   req.body.userId = req.user.id;
@@ -44,6 +44,64 @@ export const createComment = catchAsync(async (req, res, next) => {
   });
   res.status(200).send("you comment a post");
 });
+
+export const getPostAttribute = async (req, res, next) => {
+  const postAttribute = await Post.aggregate([
+    {
+      $match: { _id: new mongoose.Types.ObjectId(req.params.postId) },
+    },
+    {
+      $lookup: {
+        from: "comments",
+        let: { postId: "$_id" },
+        pipeline: [
+          { $match: { $expr: { $eq: ["$$postId", "$postId"] } } },
+          {
+            $lookup: {
+              from: "users",
+              let: { userId: "$userId" },
+              pipeline: [
+                { $match: { $expr: { $eq: ["$$userId", "$_id"] } } },
+                { $project: { profileName: 1, avatar: 1, _id: 0 } },
+              ],
+              as: "User",
+            },
+          },
+          {
+            $addFields: {
+              userName: { $arrayElemAt: ["$User.profileName", 0] },
+            },
+          },
+          {
+            $sort: { createdAt: -1 },
+          },
+          {
+            $project: { _id: 0, userName: 1, content: 1, createdAt: 1 },
+          },
+        ],
+        as: "Comments",
+      },
+    },
+    {
+      $lookup: {
+        from: "likes",
+        let: { postId: "$_id" },
+        pipeline: [{ $match: { $expr: { $eq: ["$$postId", "$postId"] } } }],
+        as: "Likes",
+      },
+    },
+    {
+      $addFields: {
+        likeQuantity: { $size: ["$Likes"] },
+        commentQuantity: { $size: ["$Comments"] },
+      },
+    },
+    {
+      $project: { _id: 0, __v: 0, userId: 0, Likes: 0 },
+    },
+  ]);
+  res.status(200).send(postAttribute);
+};
 
 // for testing
 export const getAllPostByUser = async (req, res, next) => {
