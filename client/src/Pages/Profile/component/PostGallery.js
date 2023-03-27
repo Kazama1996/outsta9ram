@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostWindow from "../../../component/PostWindow";
-import { getPostAttribute } from "../../../global/api";
+import {
+  getPostAttribute,
+  getComment,
+  isLikeBefore,
+} from "../../../global/api";
 import Modal from "react-modal";
 import "./style/PostGallery.css";
 function PostGallery(props) {
   const posts = props.posts;
   const [isDisplayPostWindow, setIsDisPlayPostWindow] = useState(false);
   const [postAttrubute, setPostAttribute] = useState({});
+  const [comment, setCoumment] = useState([]);
+  const [likeState, setLikeState] = useState({});
+  const [postId, setPostId] = useState("");
+
   const handleClick = async (e) => {
     if (e.target.id) {
-      //console.log(e.target.id);
-      getPostAttribute(e.target.id)
-        .then((response) => {
-          setPostAttribute(response.data[0]);
-          console.log(postAttrubute);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setPostId(e.target.id);
+      const att = await getPostAttribute(e.target.id);
+      const comm = await getComment(e.target.id);
+      const isReadyLike = await isLikeBefore(e.target.id);
+      if (isReadyLike.data) {
+        setLikeState(true);
+      } else {
+        setLikeState(false);
+      }
+      setPostAttribute(att.data[0]);
+      setCoumment(comm.data);
       setIsDisPlayPostWindow(true);
     }
   };
-  const closeModal = (e) => {
+  const closeModal = async (e) => {
     setIsDisPlayPostWindow(false);
+    const att = await getPostAttribute(postId);
+    setPostAttribute(att.data[0]);
+    window.location.reload(true);
   };
 
   if (!posts.length) return <h3>Loading...</h3>;
@@ -53,6 +66,11 @@ function PostGallery(props) {
         isDisplayPostWindow={isDisplayPostWindow}
         closeModal={closeModal}
         postAttrubute={postAttrubute}
+        setPostAttribute={setPostAttribute}
+        comment={comment}
+        likeState={likeState}
+        setLikeState={setLikeState}
+        postId={postId}
       />
     </div>
   );
