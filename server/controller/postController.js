@@ -115,6 +115,18 @@ export const getComment = async (req, res, next) => {
   res.status(200).send(comment);
 };
 
+export const isLikeBefore = async (req, res, next) => {
+  const targetLike = await Like.findOne({
+    postId: new mongoose.Types.ObjectId(req.params.postId),
+    userId: req.user.id,
+  });
+  if (targetLike) {
+    res.status(200).send(true);
+  } else {
+    res.status(200).send(false);
+  }
+};
+
 // for testing
 export const getAllPostByUser = async (req, res, next) => {
   const targetUser = await User.findOne({

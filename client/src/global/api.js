@@ -39,3 +39,17 @@ export const getUserProfile = function (user) {
 export const getPostAttribute = function (postId) {
   return instance.get(`/api/p/${postId}`, customConfig);
 };
+export const getComment = function (postId) {
+  return instance.get(`/api/comment/${postId}`, customConfig);
+};
+
+export const isLikeBefore = function (postId) {
+  return instance.get(`/api/like/${postId}`, customConfig);
+};
+
+export const cancelLike = function (postId) {
+  return instance.delete(`/api/like/${postId}`, customConfig);
+};
+export const likePost = function (postId) {
+  return instance.post(`/api/like/${postId}`, customConfig);
+};

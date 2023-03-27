@@ -21,7 +21,6 @@ function Profile() {
         );
         setUserProfile(res.data[0]);
         setPosts(res.data[0].Posts);
-        console.log(userProfile);
       } catch (err) {
         console.log(err);
       }
