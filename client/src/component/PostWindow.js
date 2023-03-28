@@ -1,10 +1,11 @@
 import Modal from "react-modal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./style/PostWindow.css";
 import CommentItem from "./CommentItem";
 import heart from "../material/heart.png";
 import fillheart from "../material/fillheart.png";
 import InputField from "./InputField";
+import { createComment } from "../global/api";
 import {
   isLikeBefore,
   likePost,
@@ -13,15 +14,30 @@ import {
 } from "../global/api";
 function PostWindow(props) {
   const {
+    setIsDisPlayPostWindow,
     isDisplayPostWindow,
     postAttrubute,
-    setPostAttribute,
     closeModal,
     comment,
     likeState,
     setLikeState,
     postId,
   } = props;
+
+  const inputComment = useRef(null);
+
+  const subitComment = async function (e) {
+    try {
+      const reqBody = {
+        content: inputComment.current.value,
+      };
+      await createComment(postId, reqBody);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsDisPlayPostWindow(false);
+    window.location.reload(true);
+  };
 
   const handleLike = async function () {
     let res = "";
@@ -52,11 +68,19 @@ function PostWindow(props) {
         }}
       ></div>
       <div className="property">
-        <div className="user">{postAttrubute.author}</div>
+        <div className="user">
+          <div
+            className="avatar-user"
+            style={{
+              backgroundImage: `url(${postAttrubute.avatar})`,
+            }}
+          ></div>
+          {postAttrubute.author}
+        </div>
         <div className="content">{postAttrubute.content}</div>
         <div className="comment">
           {comment.map((el, index) => {
-            return <CommentItem element={el} />;
+            return <CommentItem element={el} key={index} />;
           })}
         </div>
         <div>
@@ -65,7 +89,14 @@ function PostWindow(props) {
           </div>
           <div>{postAttrubute.createdAt}</div>
         </div>
-        <InputField placeholder={"Leave a comment "} />
+        <div className="editor-comment">
+          <InputField
+            placeholder={"Leave a comment "}
+            className={"input-content"}
+            reference={inputComment}
+          />
+          <button onClick={subitComment}>publish</button>
+        </div>
       </div>
       <div></div>
     </Modal>
