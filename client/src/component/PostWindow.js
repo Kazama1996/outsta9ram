@@ -62,7 +62,7 @@ function PostWindow(props) {
           <div>
             <img src={likeState ? fillheart : heart} onClick={handleLike} />
           </div>
-          <div>createdAt</div>
+          <div>{postAttrubute.createdAt}</div>
         </div>
         <input type="text" />
       </div>

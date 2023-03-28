@@ -4,7 +4,9 @@ import { Like } from "../model/likeModel.js";
 import { Comment } from "../model/commentModel.js";
 import { User } from "../model/userModel.js";
 import { AppError } from "../utils/appError.js";
+import { formatDistance } from "date-fns";
 import mongoose from "mongoose";
+
 export const createPost = catchAsync(async (req, res, next) => {
   req.body.createdAt = Date.now();
   req.body.userId = req.user.id;
@@ -84,6 +86,13 @@ export const getPostAttribute = async (req, res, next) => {
       $project: { _id: 0, __v: 0, userId: 0, Likes: 0, User: 0 },
     },
   ]);
+
+  postAttribute[0].createdAt = formatDistance(
+    postAttribute[0].createdAt,
+    Date.now(),
+    { addSuffix: true }
+  );
+
   res.status(200).send(postAttribute);
 };
 
@@ -114,6 +123,11 @@ export const getComment = async (req, res, next) => {
       $project: { createdAt: 1, content: 1, _id: 0, avatar: 1, profileName: 1 },
     },
   ]);
+  comment.map((el) => {
+    el.createdAt = formatDistance(el.createdAt, Date.now(), {
+      addSuffix: true,
+    });
+  });
   res.status(200).send(comment);
 };
 
