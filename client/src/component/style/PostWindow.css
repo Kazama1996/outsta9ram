@@ -1,7 +1,7 @@
 .window-post{
     display: flex;
     position: absolute;
-    background-color: green;
+    background-color: floralwhite;
     top: 30px;
     left: 150px;
     right: 150px;
@@ -22,10 +22,18 @@
     background-position: 0% 0%;
     background-size: 100% 100%;
   }
-  .btn-like{
-    width:200px;
-    height:200px;
-    display: flex;
+
+  .user{
+    height:5%;
+  }
+  .content{
+    max-width: 50ch;
+    overflow-y: auto;
+    height: 200px; 
+    background: transparent;
+    }
+  .comment{
+    height:50%;
   }
 
   

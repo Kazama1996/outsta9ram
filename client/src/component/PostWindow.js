@@ -4,6 +4,7 @@ import "./style/PostWindow.css";
 import CommentItem from "./CommentItem";
 import heart from "../material/heart.png";
 import fillheart from "../material/fillheart.png";
+import InputField from "./InputField";
 import {
   isLikeBefore,
   likePost,
@@ -59,12 +60,12 @@ function PostWindow(props) {
           })}
         </div>
         <div>
-          <div>
+          <div className="btn-like">
             <img src={likeState ? fillheart : heart} onClick={handleLike} />
           </div>
           <div>{postAttrubute.createdAt}</div>
         </div>
-        <input type="text" />
+        <InputField placeholder={"Leave a comment "} />
       </div>
       <div></div>
     </Modal>
