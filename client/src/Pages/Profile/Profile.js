@@ -6,7 +6,6 @@ import ProfileHeader from "./component/ProfileHeader.js";
 import PostWindow from "../../component/PostWindow";
 function Profile() {
   //return <h1>This is profile</h1>;
-  const baseUrl = "https://outsta9ram-bucket.s3.ap-northeast-1.amazonaws.com/";
   const [userProfile, setUserProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const handleClick = function (e) {

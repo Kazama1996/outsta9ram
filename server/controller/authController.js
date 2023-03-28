@@ -29,7 +29,7 @@ const setJWTCookie = function (statusCode, user, res) {
 export const signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     ...req.body,
-    avatar: process.env.AWS_S3BUCKET_URL + "/default/Avatar.png",
+    avatar: process.env.AWS_S3BUCKET_URL + "default/Avatar.png",
   });
   setJWTCookie(201, newUser, res);
 });
