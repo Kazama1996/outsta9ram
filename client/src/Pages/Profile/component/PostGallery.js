@@ -5,8 +5,9 @@ import {
   getComment,
   isLikeBefore,
 } from "../../../global/api";
-import Modal from "react-modal";
 import "./style/PostGallery.css";
+import heart from "../../../material/like.png";
+import commentWhite from "../../../material/comment.png";
 function PostGallery(props) {
   const posts = props.posts;
   const [isDisplayPostWindow, setIsDisPlayPostWindow] = useState(false);
@@ -53,17 +54,18 @@ function PostGallery(props) {
           >
             <div className="overlay" id={post._id}>
               <div>
-                <h3>{`Likes:${post.LikeQuantity}`}</h3>
+                <img src={heart} className="img-like" />
               </div>
               <div>
-                <h3>{`Comment:${post.CommentQuantity}`}</h3>
-              </div>{" "}
+                <img src={commentWhite} className="img-comment" />
+              </div>
             </div>
           </div>
         );
       })}
       <PostWindow
         isDisplayPostWindow={isDisplayPostWindow}
+        setIsDisPlayPostWindow={setIsDisPlayPostWindow}
         closeModal={closeModal}
         postAttrubute={postAttrubute}
         setPostAttribute={setPostAttribute}

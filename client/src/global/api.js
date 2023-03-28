@@ -53,3 +53,7 @@ export const cancelLike = function (postId) {
 export const likePost = function (postId) {
   return instance.post(`/api/like/${postId}`, customConfig);
 };
+
+export const createComment = function (postId, data) {
+  return instance.post(`/api/comment/${postId}`, data, customConfig);
+};

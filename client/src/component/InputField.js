@@ -1,11 +1,11 @@
 function InputField(props) {
-  const str = props.placeholder;
   return (
     <input
+      className={props.className}
       type={props.type}
-      placeholder={str}
+      placeholder={props.placeholder}
       onFocus={(e) => (e.target.placeholder = "")}
-      onBlur={(e) => (e.target.placeholder = str)}
+      onBlur={(e) => (e.target.placeholder = props.placeholder)}
       ref={props.reference}
     ></input>
   );
