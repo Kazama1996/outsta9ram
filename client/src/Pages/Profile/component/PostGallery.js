@@ -47,7 +47,7 @@ function PostGallery(props) {
             className="gallery-item"
             onClick={handleClick}
             style={{
-              backgroundImage: `url(${`https://outsta9ram-bucket.s3.ap-northeast-1.amazonaws.com/${post.photoPath}`})`,
+              backgroundImage: `url(${post.photoPath})`,
             }}
             key={post._id}
           >

@@ -47,7 +47,7 @@ function PostWindow(props) {
       <div
         className="image"
         style={{
-          backgroundImage: `url(${`https://outsta9ram-bucket.s3.ap-northeast-1.amazonaws.com/6417dcda9a1c903de7efe7b5/21e90c83-6856-44a7-9bdb-f3c30b17d9f6.jpeg`})`,
+          backgroundImage: `url(${postAttrubute.photoPath})`,
         }}
       ></div>
       <div className="property">
