@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const followerSchema = new mongoose.Schema({
   userFrom: {
@@ -13,4 +13,4 @@ const followerSchema = new mongoose.Schema({
 
 const Followers = mongoose.model("followers", followerSchema);
 
-export { Followers };
+module.exports = Followers;

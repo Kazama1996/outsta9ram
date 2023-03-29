@@ -6,7 +6,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-export const errorHandler = (err, req, res, next) => {
+module.exports = (err, req, res, next) => {
   console.log({
     status: err.statusCode,
     message: err.message,

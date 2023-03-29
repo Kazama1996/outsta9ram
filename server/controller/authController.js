@@ -1,10 +1,19 @@
-import mongoose from "mongoose";
-import { User } from "../model/userModel.js";
-import jwt from "jsonwebtoken";
-import { AppError } from "../utils/appError.js";
-import { catchAsync } from "../utils/catchAsync.js";
-import bcrypt from "bcrypt";
-import { promisify } from "util";
+//import mongoose from "mongoose";
+//import { User } from "../model/userModel.js";
+//import jwt from "jsonwebtoken";
+//import { AppError } from "../utils/appError.js";
+//import { catchAsync } from "../utils/catchAsync.js";
+//import bcrypt from "bcrypt";
+//import { promisify } from "util";
+
+const mongoose = require("mongoose");
+const User = require("../model/userModel");
+const jwt = require("jsonwebtoken");
+const { AppError } = require("../utils/appError.js");
+const catchAsync = require("../utils/catchAsync");
+const bcrypt = require("bcrypt");
+const { promisify } = require("util");
+
 const generateJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIREIN,
@@ -26,7 +35,7 @@ const setJWTCookie = function (statusCode, user, res) {
   res.status(statusCode).send("Send JWT via cookie");
 };
 
-export const signup = catchAsync(async (req, res, next) => {
+exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     ...req.body,
     avatar: process.env.AWS_S3BUCKET_URL + "default/Avatar.png",
@@ -34,7 +43,7 @@ export const signup = catchAsync(async (req, res, next) => {
   setJWTCookie(201, newUser, res);
 });
 
-export const login = catchAsync(async (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError("Invalid email or password", 400));
@@ -50,7 +59,7 @@ export const login = catchAsync(async (req, res, next) => {
   setJWTCookie(200, user, res);
 });
 
-export const protect = async (req, res, next) => {
+exports.protect = async (req, res, next) => {
   // Retrieve jwt token from cookie.
   const { jwt: jwtCookie } = req.cookies;
   if (!jwtCookie) {
@@ -81,6 +90,6 @@ export const protect = async (req, res, next) => {
   next();
 };
 
-export const result = (req, res, next) => {
+exports.result = (req, res, next) => {
   res.status(200).send(req.user);
 };

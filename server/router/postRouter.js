@@ -1,6 +1,7 @@
-import { getPreSignUrl } from "../controller/uploadController.js";
-import { protect } from "../controller/authController.js";
-import {
+const express = require("express");
+const { getPreSignUrl } = require("../controller/uploadController");
+const { protect } = require("../controller/authController");
+const {
   createPost,
   likePost,
   cancelLikePost,
@@ -9,8 +10,7 @@ import {
   getPostAttribute,
   getComment,
   isLikeBefore,
-} from "../controller/postController.js";
-import express from "express";
+} = require("../controller/postController");
 
 const postRouter = express.Router();
 
@@ -23,4 +23,5 @@ postRouter.get("/api/like/:postId", protect, isLikeBefore);
 postRouter.post("/api/comment/:postId", protect, createComment);
 postRouter.get("/api/p/:postId", protect, getPostAttribute);
 postRouter.get("/api/comment/:postId", protect, getComment);
-export { postRouter };
+
+module.exports = postRouter;
