@@ -18,6 +18,7 @@ const userRouter = express.Router();
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.get("/api/protectRoute", protect, result);
+userRouter.post("/api/forgotPassword", forgotPassword);
 // profile
 userRouter.get("/api/:profileName", protect, getUserProfile);
 

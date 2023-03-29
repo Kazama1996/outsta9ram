@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //import mongoose from "mongoose";
 //import { User } from "../model/userModel.js";
 //import jwt from "jsonwebtoken";
@@ -13,6 +14,16 @@ const { AppError } = require("../utils/appError.js");
 const catchAsync = require("../utils/catchAsync");
 const bcrypt = require("bcrypt");
 const { promisify } = require("util");
+=======
+import mongoose from "mongoose";
+import { User } from "../model/userModel.js";
+import jwt from "jsonwebtoken";
+import { AppError } from "../utils/appError.js";
+import { catchAsync } from "../utils/catchAsync.js";
+import bcrypt from "bcrypt";
+import { promisify } from "util";
+import { sendEmail } from "../utils/sendMail.js";
+>>>>>>> 65c3100 (backup)
 
 const generateJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -90,6 +101,44 @@ exports.protect = async (req, res, next) => {
   next();
 };
 
+<<<<<<< HEAD
 exports.result = (req, res, next) => {
+=======
+export const forgotPassword = async (req, res, next) => {
+  //find the user is he/she exist in our database
+  const user = User.findOne({ email: req.email });
+  if (!user) {
+    return next(new AppError("User with this email could not found", 404));
+  }
+
+  //if so, send an reset password token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validatebeforeSave: false });
+  const resetURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  const message = `<p>Forgot your password ? Click <a href="${resetURL}">here</a> to reset your password. If you didn't forget your password, please ignore thie email</p>`;
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: `Your password reset token(valid for 10 minutes)`,
+      message: message,
+    });
+  } catch (err) {
+    user.passwordResetToken = undefined;
+    user.passwordResetExpire = undefined;
+    await user.save({ validatebeforeSave: false });
+    return next(
+      new AppError(
+        "There is an error to sending the email , please try again later",
+        500
+      )
+    );
+  }
+};
+
+export const result = (req, res, next) => {
+>>>>>>> 65c3100 (backup)
   res.status(200).send(req.user);
 };
