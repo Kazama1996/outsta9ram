@@ -28,13 +28,21 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  if (!posts.length) return <h3>Loading...</h3>;
-  return (
-    <div className="page-profile">
-      <ProfileHeader userProfile={userProfile} />
-      <PostGallery posts={posts} />
-    </div>
-  );
+  if (!posts.length) {
+    return (
+      <div className="page-profile">
+        {" "}
+        <ProfileHeader userProfile={userProfile} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="page-profile">
+        <ProfileHeader userProfile={userProfile} />
+        <PostGallery posts={posts} />
+      </div>
+    );
+  }
 }
 
 export default Profile;
