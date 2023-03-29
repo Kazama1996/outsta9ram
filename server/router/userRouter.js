@@ -1,16 +1,17 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   signup,
   login,
   protect,
   result,
-} from "../controller/authController.js";
-import {
+} = require("../controller/authController");
+const {
   getUserProfile,
   getAllUser,
   followUser,
   unfollowUser,
-} from "../controller/userController.js";
+} = require("../controller/userController");
+
 const userRouter = express.Router();
 
 // auth
@@ -27,4 +28,4 @@ userRouter.delete("/api/followers/:profileName", protect, unfollowUser);
 // dev-test
 userRouter.get("/api/users", getAllUser);
 
-export { userRouter };
+module.exports = userRouter;

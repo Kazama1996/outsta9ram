@@ -1,13 +1,13 @@
-import { Post } from "../model/postModel.js";
-import { catchAsync } from "../utils/catchAsync.js";
-import { Like } from "../model/likeModel.js";
-import { Comment } from "../model/commentModel.js";
-import { User } from "../model/userModel.js";
-import { AppError } from "../utils/appError.js";
-import { formatDistance } from "date-fns";
-import mongoose from "mongoose";
+const Post = require("../model/postModel");
+const Like = require("../model/likeModel");
+const Comment = require("../model/commentModel");
+const User = require("../model/userModel");
+const AppError = require("../utils/appError");
+const { formatDistance } = require("date-fns");
+const mongoose = require("mongoose");
+const catchAsync = require("../utils/catchAsync");
 
-export const createPost = catchAsync(async (req, res, next) => {
+exports.createPost = catchAsync(async (req, res, next) => {
   req.body.createdAt = Date.now();
   req.body.userId = req.user.id;
   const path = req.body.photoPath;
@@ -16,7 +16,7 @@ export const createPost = catchAsync(async (req, res, next) => {
   res.status(200).send(newPost);
 });
 
-export const likePost = catchAsync(async (req, res, next) => {
+exports.likePost = catchAsync(async (req, res, next) => {
   const check = await Like.findOne({
     userId: req.user.id,
     postId: req.params.postId,
@@ -31,7 +31,7 @@ export const likePost = catchAsync(async (req, res, next) => {
   res.status(200).send("you like a post");
 });
 
-export const cancelLikePost = catchAsync(async (req, res, next) => {
+exports.cancelLikePost = catchAsync(async (req, res, next) => {
   const targetLike = await Like.findOneAndDelete({
     postId: req.params.postId,
     userId: req.user.id,
@@ -39,7 +39,7 @@ export const cancelLikePost = catchAsync(async (req, res, next) => {
   res.status(200).send("you cancel like this post");
 });
 
-export const createComment = catchAsync(async (req, res, next) => {
+exports.createComment = catchAsync(async (req, res, next) => {
   const newComment = await Comment.create({
     userId: req.user.id,
     postId: req.params.postId,
@@ -49,7 +49,7 @@ export const createComment = catchAsync(async (req, res, next) => {
   res.status(200).send("you comment a post");
 });
 
-export const getPostAttribute = async (req, res, next) => {
+exports.getPostAttribute = async (req, res, next) => {
   const postAttribute = await Post.aggregate([
     {
       $match: { _id: new mongoose.Types.ObjectId(req.params.postId) },
@@ -96,7 +96,7 @@ export const getPostAttribute = async (req, res, next) => {
   res.status(200).send(postAttribute);
 };
 
-export const getComment = async (req, res, next) => {
+exports.getComment = async (req, res, next) => {
   const comment = await Comment.aggregate([
     { $match: { postId: new mongoose.Types.ObjectId(req.params.postId) } },
     {
@@ -131,7 +131,7 @@ export const getComment = async (req, res, next) => {
   res.status(200).send(comment);
 };
 
-export const isLikeBefore = async (req, res, next) => {
+exports.isLikeBefore = async (req, res, next) => {
   const targetLike = await Like.findOne({
     postId: new mongoose.Types.ObjectId(req.params.postId),
     userId: req.user.id,
@@ -144,7 +144,7 @@ export const isLikeBefore = async (req, res, next) => {
 };
 
 // for testing
-export const getAllPostByUser = async (req, res, next) => {
+exports.getAllPostByUser = async (req, res, next) => {
   const targetUser = await User.findOne({
     profileName: req.params.profileName,
   });

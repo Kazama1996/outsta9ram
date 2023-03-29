@@ -1,11 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import { userRouter } from "./router/userRouter.js";
-import { postRouter } from "./router/postRouter.js";
-import { errorHandler } from "./utils/errorHandler.js";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const postRouter = require("./router/postRouter");
+const userRouter = require("./router/userRouter");
+const errorHandler = require("./utils/errorHandler");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 dotenv.config({
   path: "./config.env",
 });

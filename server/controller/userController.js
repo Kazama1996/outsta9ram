@@ -1,11 +1,11 @@
-import { User } from "../model/userModel.js";
-import { Like } from "../model/likeModel.js";
-import { Comment } from "../model/commentModel.js";
-import { Post } from "../model/postModel.js";
-import { Followers } from "../model/followerModel.js";
-import { AppError } from "../utils/appError.js";
-import { catchAsync } from "../utils/catchAsync.js";
-export const getUserProfile = async (req, res, next) => {
+const User = require("../model/userModel");
+const Comment = require("../model/commentModel");
+const Post = require("../model/commentModel");
+const Followers = require("../model/followerModel");
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
+
+exports.getUserProfile = async (req, res, next) => {
   const profile = await User.aggregate([
     { $match: { profileName: req.params.profileName } },
     {
@@ -88,7 +88,7 @@ export const getUserProfile = async (req, res, next) => {
   res.status(200).send(profile);
 };
 
-export const followUser = catchAsync(async (req, res, next) => {
+exports.followUser = catchAsync(async (req, res, next) => {
   const targetUser = await User.findOne({
     profileName: req.params.profileName,
   });
@@ -111,7 +111,7 @@ export const followUser = catchAsync(async (req, res, next) => {
   res.status(200).send("You follow a user");
 });
 
-export const unfollowUser = async (req, res, next) => {
+exports.unfollowUser = async (req, res, next) => {
   const targetUser = await User.findOne({
     profileName: req.params.profileName,
   });
@@ -127,7 +127,7 @@ export const unfollowUser = async (req, res, next) => {
 };
 
 // for testing
-export const getAllUser = async (req, res, next) => {
+exports.getAllUser = async (req, res, next) => {
   const AllUser = await User.find();
   res.status(200).send(AllUser);
 };
