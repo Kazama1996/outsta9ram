@@ -1,6 +1,5 @@
 import logo from "./logo.svg";
-import Signup from "./Pages/Authentication/Signup";
-import Login from "./Pages/Authentication/Login";
+import Login from "./component/Login";
 import Feed from "./Pages/Feed/Feed";
 import { Navigate } from "react-router-dom";
 import "./App.css";
@@ -8,21 +7,19 @@ import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from "./component/Sidebar";
 import Profile from "./Pages/Profile/Profile";
-
-const ProtectedRoute = ({ isLogin, redirectPath = "/landing", children }) => {
-  if (!isLogin) {
-    return <h1>Please login</h1>;
-  }
-  return children;
-};
-
+import PasswordReset from "./Pages/Authentication/PasswordReset";
+import Signup from "./component/Signup";
+import FrogotPassword from "./Pages/Authentication/ForgotPassword";
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
   return (
     <Sidebar>
       <Routes>
         <Route path="/" element={<Feed />} />
-        <Route path="/:id" element={<Profile />} />
+        <Route path="/profile/:profileName" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotPassword" element={<FrogotPassword />} />
+        <Route path="/passwordReset" element={<PasswordReset />} />
       </Routes>
     </Sidebar>
   );

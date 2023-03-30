@@ -4,6 +4,9 @@ const {
   login,
   protect,
   result,
+  forgotPassword,
+  redirectPasswordReset,
+  resetPassword,
 } = require("../controller/authController");
 const {
   getUserProfile,
@@ -19,6 +22,8 @@ userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.get("/api/protectRoute", protect, result);
 userRouter.post("/api/forgotPassword", forgotPassword);
+userRouter.get("/api/redirectPasswordReset/:token", redirectPasswordReset);
+userRouter.post("/api/passwordReset", resetPassword);
 // profile
 userRouter.get("/api/:profileName", protect, getUserProfile);
 

@@ -12,7 +12,9 @@ export const signup = function (data) {
 export const login = function (data) {
   return instance.post("login", data, customConfig);
 };
-
+export const forgotPassword = function (data) {
+  return instance.post("/api/forgotPassword", data, customConfig);
+};
 export const getPreSignUrl = function () {
   return instance.get("/api/preSignUrl", customConfig);
 };
@@ -56,4 +58,8 @@ export const likePost = function (postId) {
 
 export const createComment = function (postId, data) {
   return instance.post(`/api/comment/${postId}`, data, customConfig);
+};
+
+export const resetPassword = function (data) {
+  return instance.post("/api/passwordReset", data, customConfig);
 };

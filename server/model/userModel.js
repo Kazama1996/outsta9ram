@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 const userSchema = mongoose.Schema({
   email: {
@@ -57,8 +58,10 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
-  this.passwordResetExpire = Date.now() * 1000 * 60 * 10;
+  this.passwordResetExpire = Date.now() + 1000 * 60 * 10;
   return resetToken;
 };
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

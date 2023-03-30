@@ -1,12 +1,12 @@
 import InputField from "./InputField";
-import { useRef, useState } from "react";
-import { login } from "../global/api";
+import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
-
+import { useNavigate } from "react-router-dom";
+import { login } from "../global/api";
 function Login(props) {
-  const { isOpenLoginPage, setIsOpenLoginPage } = props;
   const email = useRef(null);
   const password = useRef(null);
+  const navigate = useNavigate();
 
   const submitLogin = async function () {
     const reqBody = {
@@ -15,24 +15,29 @@ function Login(props) {
     };
     await login(JSON.stringify(reqBody))
       .then((response) => {
-        setIsOpenLoginPage(false);
+        navigate(`/profile/${response.data.profileName}`);
       })
       .catch((error) => {
-        setIsOpenLoginPage(true);
+        navigate("/login");
         console.log(error);
       });
   };
 
+  const redirectSignup = function () {
+    navigate("/signup");
+  };
+  const redirectForgotPwd = function () {
+    navigate("/forgotPassword");
+  };
+
   return (
-    <Modal
-      isOpen={isOpenLoginPage}
-      className="popupWindow-login"
-      ariaHideApp={false}
-    >
-      <h2>Please log in for more experience</h2>
+    <Modal isOpen={true} className="popupWindow-login" ariaHideApp={false}>
+      <h2>Please login for more experience</h2>
+
       <div>
         <InputField type={"text"} placeholder={"Email"} reference={email} />
       </div>
+
       <div>
         <InputField
           type={"password"}
@@ -42,6 +47,10 @@ function Login(props) {
       </div>
 
       <button onClick={submitLogin}>Login</button>
+      <div>
+        <button onClick={redirectSignup}>I don't have an account</button>
+        <button onClick={redirectForgotPwd}>Forgot password?</button>
+      </div>
     </Modal>
   );
 }
