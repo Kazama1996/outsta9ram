@@ -1,8 +1,8 @@
-import InputField from "./InputField";
+import InputField from "../../component/InputField";
 import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import { login } from "../global/api";
+import { login } from "../../global/api";
 function Login(props) {
   const email = useRef(null);
   const password = useRef(null);

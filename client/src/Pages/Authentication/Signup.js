@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Modal from "react-modal";
-import InputField from "./InputField";
-import { signup } from "../global/api";
+import InputField from "../../component/InputField";
+import { signup } from "../../global/api";
 import { useNavigate } from "react-router-dom";
 function Signup() {
   const email = useRef(null);
