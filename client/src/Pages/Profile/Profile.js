@@ -16,7 +16,7 @@ function Profile() {
     async function fetchProfile() {
       try {
         const res = await getUserProfile(
-          window.location.pathname.split("/")[1]
+          window.location.pathname.split("/")[2]
         );
         setUserProfile(res.data[0]);
         setPosts(res.data[0].Posts);

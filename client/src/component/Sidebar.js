@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import PostEditor from "./PostEditor";
-import Login from "./Login";
 import home from "../material/home.png";
 import create from "../material/create.png";
 import profile from "../material/profile.png";
@@ -103,7 +102,7 @@ function Sidebar({ children }) {
     const storedCount = localStorage.getItem("currentPage");
     return storedCount ? parseInt(storedCount, 10) : 0;
   });
-  const [isOpenLoginPage, setIsOpenLoginPage] = useState(false);
+  const [loginState, setLoginState] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -123,12 +122,13 @@ function Sidebar({ children }) {
             setIsDisplayEditor(true);
             break;
           case 3:
-            navigate(`/${response.data.profileName}`);
+            navigate(`/profile/${response.data.profileName}`);
             break;
         }
       })
       .catch((err) => {
-        setIsOpenLoginPage(true);
+        setLoginState(false);
+        navigate(`/login`);
       });
 
     setCurrentPage(parseInt(e.target.id));
@@ -144,10 +144,6 @@ function Sidebar({ children }) {
       </div>
       <div className="pages">
         <main>{children}</main>
-        <Login
-          isOpenLoginPage={isOpenLoginPage}
-          setIsOpenLoginPage={setIsOpenLoginPage}
-        />
         <PostEditor
           isDisplayEditor={isDisplayEditor}
           setIsDisplayEditor={setIsDisplayEditor}

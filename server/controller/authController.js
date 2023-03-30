@@ -9,10 +9,13 @@
 const mongoose = require("mongoose");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
-const { AppError } = require("../utils/appError.js");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const { promisify } = require("util");
+const sendEmail = require("../utils/email");
+const { redirect } = require("react-router-dom");
 
 const generateJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -20,7 +23,7 @@ const generateJWT = (id) => {
   });
 };
 
-const setJWTCookie = function (statusCode, user, res) {
+const setJWTCookie = function (statusCode, user, res, isReset = false) {
   const token = generateJWT(user._id);
 
   const cookieOptions = {
@@ -32,7 +35,7 @@ const setJWTCookie = function (statusCode, user, res) {
     sameSite: "None",
   };
   res.cookie("jwt", token, cookieOptions);
-  res.status(statusCode).send("Send JWT via cookie");
+  res.status(statusCode).send(user);
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -89,6 +92,100 @@ exports.protect = async (req, res, next) => {
 
   next();
 };
+
+exports.forgotPassword = async (req, res, next) => {
+  //find the user is he/she exist in our database
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError("User with this email could not found", 404));
+  }
+
+  //if so, send an reset password token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validatebeforeSave: false });
+  const resetURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/redirectPasswordReset/${resetToken}`;
+  console.log(resetURL);
+
+  const message = `<p>Forgot your password ? Click <a href="${resetURL}">here</a> to reset your password. If you didn't forget your password, please ignore thie email</p>`;
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: `Your password reset token(valid for 10 minutes)`,
+      message: message,
+    });
+    res.status(200).send("Token sent to email");
+  } catch (err) {
+    console.log(err);
+    user.passwordResetToken = undefined;
+    user.passwordResetExpire = undefined;
+    await user.save({ validatebeforeSave: false });
+    return next(
+      new AppError(
+        "There is an error to sending the email , please try again later",
+        500
+      )
+    );
+  }
+};
+
+exports.redirectPasswordReset = catchAsync(async (req, res, next) => {
+  const hashToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: hashToken,
+    passwordResetExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError("Token belongs to this user is invalid", 401));
+  }
+
+  const cookieOptions = {
+    expires: new Date(Date.now() + 10 * 60 * 1000),
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  };
+  res.cookie("PWDReset", req.params.token, cookieOptions);
+  //res.status(200).send("success");
+  res.status(301).redirect("http://localhost:3000/passwordReset");
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  // retrive the cookie from server.
+  const { PWDReset: PWDResetCookie } = req.cookies;
+  const hashToken = crypto
+    .createHash("sha256")
+    .update(PWDResetCookie)
+    .digest("hex");
+
+  // verify the cookie
+  const user = await User.findOne({
+    passwordResetToken: hashToken,
+    passwordResetExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(
+      new AppError(
+        "Token belongs to this user is invalid, please refill fill in the email in forgot password page again to obtain the new token",
+        401
+      )
+    );
+  }
+  // reset the password
+  user.password = req.body.password;
+  // set the password Reset token to undefined.
+  user.passwordResetToken = undefined;
+  user.passwordResetExpire = undefined;
+  await user.save();
+
+  setJWTCookie(201, user, res);
+});
 
 exports.result = (req, res, next) => {
   res.status(200).send(req.user);

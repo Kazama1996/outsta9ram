@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+
 const userSchema = mongoose.Schema({
   email: {
     type: String,
@@ -28,6 +30,12 @@ const userSchema = mongoose.Schema({
   changePasswordAt: {
     type: Date,
   },
+  passwordResetToken: {
+    type: String,
+  },
+  passwordResetExpire: {
+    type: Date,
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -42,6 +50,16 @@ userSchema.methods.checkJWTExpire = function (iatTime) {
     changeTimestamp = this.changePasswordAt.getTime() / 1000;
   }
   return changeTimestamp > iatTime ? true : false;
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.passwordResetExpire = Date.now() + 1000 * 60 * 10;
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);

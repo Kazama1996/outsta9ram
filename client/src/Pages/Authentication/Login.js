@@ -1,52 +1,58 @@
-// import InputField from "./component/InputField";
-// import { useState } from "react";
-// import { useBeforeUnload, useNavigate } from "react-router-dom";
-// import { login } from "../../global/api";
-// import { protect } from "../../global/api";
+import InputField from "../../component/InputField";
+import { useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../global/api";
+function Login(props) {
+  const email = useRef(null);
+  const password = useRef(null);
+  const navigate = useNavigate();
 
-// import "./styles/Signup.css";
-// function Login(props) {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = new useState("");
-//   let navigate = useNavigate();
+  const submitLogin = async function () {
+    const reqBody = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+    await login(JSON.stringify(reqBody))
+      .then((response) => {
+        navigate(`/profile/${response.data.profileName}`);
+      })
+      .catch((error) => {
+        navigate("/login");
+        console.log(error);
+      });
+  };
 
-//   const handleClick = async function () {
-//     console.log("click");
+  const redirectSignup = function () {
+    navigate("/signup");
+  };
+  const redirectForgotPwd = function () {
+    navigate("/forgotPassword");
+  };
 
-//     // callAPI if return status Code =200 then set
-//     const reqBody = {
-//       email: email,
-//       password: password,
-//     };
-//     console.log(reqBody);
-//     await login(JSON.stringify(reqBody))
-//       .then((response) => {
-//         if (response.status === 200) {
-//           props.setIsLogin(true);
-//         }
-//       })
-//       .catch((err) => {
-//         props.setIsLogin(false);
-//         //navigate("/feed");
-//       });
-//     //navigate("/feed");
-//   };
+  return (
+    <Modal isOpen={true} className="popupWindow-login" ariaHideApp={false}>
+      <h2>Please login for more experience</h2>
 
-//   return (
-//     <div className="signup">
-//       <InputField type={"text"} placeholder={"Email"} setData={setEmail} />
-//       <InputField
-//         type={"text"}
-//         placeholder={"password"}
-//         setData={setPassword}
-//       />
-//       <input
-//         type="submit"
-//         className="btn_register"
-//         value="Login"
-//         onClick={handleClick}
-//       ></input>
-//     </div>
-//   );
-// }
-// export default Login;
+      <div>
+        <InputField type={"text"} placeholder={"Email"} reference={email} />
+      </div>
+
+      <div>
+        <InputField
+          type={"password"}
+          placeholder={"Password"}
+          reference={password}
+        />
+      </div>
+
+      <button onClick={submitLogin}>Login</button>
+      <div>
+        <button onClick={redirectSignup}>I don't have an account</button>
+        <button onClick={redirectForgotPwd}>Forgot password?</button>
+      </div>
+    </Modal>
+  );
+}
+
+export default Login;
