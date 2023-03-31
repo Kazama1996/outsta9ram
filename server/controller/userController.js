@@ -5,6 +5,14 @@ const Followers = require("../model/followerModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
+const filterObj = (obj, ...allowFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
 exports.getUserProfile = async (req, res, next) => {
   const profile = await User.aggregate([
     { $match: { profileName: req.params.profileName } },
@@ -126,6 +134,28 @@ exports.unfollowUser = async (req, res, next) => {
   res.status(200).send("you unfollow a user");
 };
 
+exports.updateMe = catchAsync(async (req, res, next) => {
+  if (req.body.password) {
+    return next(
+      new AppError(
+        "This router is not for password update , Please user updateMyPassword",
+        400
+      )
+    );
+  }
+  const filteredBody = filterObj(
+    req.body,
+    "profileName",
+    "signature",
+    "avatar"
+  );
+
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).send("you update your profile");
+});
 // for testing
 exports.getAllUser = async (req, res, next) => {
   const AllUser = await User.find();
