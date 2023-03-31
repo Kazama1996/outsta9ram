@@ -1,0 +1,16 @@
+.editor-container{
+    transform: translate(40vw,30vh);
+}
+.avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 99em;
+    background-repeat: no-repeat;  
+    background-position: 0% 0%;
+    background-size: 100% 100%;
+    
+
+}
+.btn-editavatar:hover{
+    cursor: pointer;
+}

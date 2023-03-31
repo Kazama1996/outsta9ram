@@ -61,5 +61,14 @@ export const createComment = function (postId, data) {
 };
 
 export const resetPassword = function (data) {
-  return instance.post("/api/passwordReset", data, customConfig);
+  return instance.patch("/api/passwordReset", data, customConfig);
+};
+export const updatePassword = function (data) {
+  return instance.patch("/api/updatePassword", data, customConfig);
+};
+export const updateMe = function (data) {
+  return instance.patch("/api/updateMe", data, customConfig);
+};
+export const logout = function () {
+  return instance.get("/logout", customConfig);
 };

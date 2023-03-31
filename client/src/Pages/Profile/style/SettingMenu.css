@@ -1,0 +1,23 @@
+.menu-setting-overlay{
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .menu-setting{
+    display: flex;
+    justify-content: center;
+    width:200px;
+    height:400px;
+    background-color:floralwhite
+  }
+.btns div{
+    margin-top: 30px;
+    border: double;
+}
+
+.btns div:hover{
+    cursor: pointer;
+}

@@ -5,7 +5,7 @@ import {
   getComment,
   isLikeBefore,
 } from "../../../global/api";
-import "./style/PostGallery.css";
+import "../style/PostGallery.css";
 import heart from "../../../material/like.png";
 import commentWhite from "../../../material/comment.png";
 function PostGallery(props) {

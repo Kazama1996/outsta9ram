@@ -131,26 +131,26 @@
   width: 100vw;
   height:100vh;
 }
-.header-profile{
+/* .header-profile{
   display: flex;
   width:100vw;
   height:20vh;
   background-color: navy;
-}
-.avatar-region{
+} */
+/* .avatar-region{
   display: flex;
   justify-content: center;
   align-items: center;
   width:25%;
   height:100%;
   background-color: burlywood;
-}
-.user-info{
+} */
+/* .user-info{
   display: block;
   height:100%;
   width:75%;
   background-color: coral;
-}
+} */
 
 .loginPage{
   display: flex;
@@ -161,23 +161,11 @@
   background-color: purple;
 }
 
-.pages{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .ReactModal__Overlay{
   display: flex;
   justify-content:center;
   align-items: center;
 }
-/* .postEditor{
-  display: flex;
-  width:600px;
-  height:400px;
-  background-color: purple;
-} */
 .imageWindow{
   display: flex;
   justify-content: center;
@@ -198,16 +186,16 @@
   margin-left: 50%;
 }
 
-.userPhoto{
+/* .userPhoto{
   width:150px;
   height:150px;
   border-radius: 99em;
-}
+} */
 
-.post-and-followers h2{
+/* .post-and-followers h2{
   display: inline;
   margin: 0px 20px;
-}
+} */
 
 /* .gallery {
   display: grid;
@@ -272,3 +260,4 @@
 
 
  */
+
