@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
   createAt: {
     type: Date,
   },
+  signature: {
+    type: String,
+    default: "Say somthing...",
+  },
   changePasswordAt: {
     type: Date,
   },

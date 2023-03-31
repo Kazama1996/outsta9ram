@@ -34,6 +34,8 @@ const setJWTCookie = function (statusCode, user, res, isReset = false) {
     secure: true,
     sameSite: "None",
   };
+  user.password = undefined;
+
   res.cookie("jwt", token, cookieOptions);
   res.status(statusCode).send(user);
 };
