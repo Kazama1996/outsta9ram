@@ -2,12 +2,14 @@ import InputField from "../../component/InputField";
 import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import { resetPassword } from "../../global/api";
+import { resetPassword, updatePassword } from "../../global/api";
+import { useLocation } from "react-router-dom";
 function PasswordReset() {
   const newPassword = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const submitNewPassword = async function () {
+  const submitReset = async function () {
     const reqBody = {
       password: newPassword.current.value,
     };
@@ -19,14 +21,24 @@ function PasswordReset() {
         console.log(err);
       });
   };
-
-  const redirectLogin = function () {
-    navigate("/login");
+  const submitUpdate = async function () {
+    const reqBody = {
+      password: newPassword.current.value,
+    };
+    await updatePassword(JSON.stringify(reqBody))
+      .then((res) => {
+        navigate(`/profile/${res.data.profileName}`);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   return (
     <Modal isOpen={true} className="popupWindow-login" ariaHideApp={false}>
       <h2>Fill your new password below and submit</h2>
-
+      {console.log(location)}
       <div>
         <InputField
           type={"password"}
@@ -35,7 +47,9 @@ function PasswordReset() {
         />
       </div>
 
-      <button onClick={submitNewPassword}>Reset password</button>
+      <button onClick={location.state === null ? submitReset : submitUpdate}>
+        Reset password
+      </button>
     </Modal>
   );
 }

@@ -90,6 +90,7 @@ exports.getUserProfile = async (req, res, next) => {
         FollowerQuantity: 1,
         FollowingQuantity: 1,
         signature: 1,
+        avatar: 1,
       },
     },
   ]);
@@ -149,12 +150,22 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     "signature",
     "avatar"
   );
+  console.log(req.body);
+  if (filteredBody.avatar) {
+    const path = filteredBody.avatar;
+    filteredBody.avatar = process.env.AWS_S3BUCKET_URL + path;
+    console.log("haveAvatar");
+  }
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
   });
-  res.status(200).send("you update your profile");
+  updatedUser.password = undefined;
+  updatedUser.passwordResetExpire = undefined;
+  updatedUser.passwordResetToken = undefined;
+
+  res.status(200).send(updatedUser);
 });
 // for testing
 exports.getAllUser = async (req, res, next) => {

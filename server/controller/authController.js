@@ -184,9 +184,33 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // set the password Reset token to undefined.
   user.passwordResetToken = undefined;
   user.passwordResetExpire = undefined;
-  await user.save();
+  user.change;
+  await user.save({ validateBeforeSave: false });
+  res.clearCookie("PWDReset").send("you are log out");
+  setJWTCookie(200, user, res);
+});
 
-  setJWTCookie(201, user, res);
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user.id });
+  if (!user) {
+    return next(new AppError("User could not found", 404));
+  }
+  user.password = req.body.password;
+  await user.save({ validateBeforeSave: false });
+  setJWTCookie(200, user, res);
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIREIN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  };
+  res.clearCookie("jwt", cookieOptions);
+  res.status(200).send("logout");
 });
 
 exports.result = (req, res, next) => {
