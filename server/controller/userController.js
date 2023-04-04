@@ -4,6 +4,8 @@ const Post = require("../model/commentModel");
 const Followers = require("../model/followerModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const Review = require("../model/reviewModel");
+const { default: mongoose } = require("mongoose");
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -135,6 +137,32 @@ exports.unfollowUser = async (req, res, next) => {
   res.status(200).send("you unfollow a user");
 };
 
+exports.getFollower = async (req, res, next) => {
+  const targetUser = await User.findOne({
+    profileName: req.params.profileName,
+  });
+
+  const followerList = await Followers.aggregate([
+    { $match: { userTo: new mongoose.Types.ObjectId(targetUser._id) } },
+    { $project: { userFrom: 1 } },
+    { $skip: 50 * (req.params.page - 1) },
+    { $limit: 50 },
+  ]);
+  res.status(200).send(followerList);
+};
+exports.getFollowing = async (req, res, next) => {
+  const targetUser = await User.findOne({
+    profileName: req.params.profileName,
+  });
+  const followingList = await Followers.aggregate([
+    { $match: { userFrom: new mongoose.Types.ObjectId(targetUser._id) } },
+    { $project: { userTo: 1 } },
+    { $skip: 50 * (req.params.page - 1) },
+    { $limit: 50 },
+  ]);
+  res.status(200).send(followingList);
+};
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password) {
     return next(
@@ -167,6 +195,15 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   res.status(200).send(updatedUser);
 });
+
+exports.getReview = async (req, res, next) => {
+  const reviewList = await Review.aggregate([
+    { $sort: { index: -1 } },
+    { $skip: 3 * (req.params.page - 1) },
+    { $limit: 3 },
+  ]);
+  res.status(200).send(reviewList);
+};
 // for testing
 exports.getAllUser = async (req, res, next) => {
   const AllUser = await User.find();
