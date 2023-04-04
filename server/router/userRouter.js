@@ -16,6 +16,9 @@ const {
   followUser,
   unfollowUser,
   updateMe,
+  getFollower,
+  getFollowing,
+  getReview,
 } = require("../controller/userController");
 
 const userRouter = express.Router();
@@ -35,8 +38,11 @@ userRouter.patch("/api/updateMe", protect, updateMe);
 // follower
 userRouter.post("/api/followers/:profileName", protect, followUser);
 userRouter.delete("/api/followers/:profileName", protect, unfollowUser);
+userRouter.get("/api/followers/:profileName/:page", protect, getFollower);
+userRouter.get("/api/following/:profileName/:page", protect, getFollowing);
 
 // dev-test
 userRouter.get("/api/users", getAllUser);
+userRouter.get("/api/review/:page", protect, getReview);
 
 module.exports = userRouter;
