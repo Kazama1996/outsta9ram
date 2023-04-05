@@ -37,5 +37,11 @@
 
    .profileName-and-seting img:hover{
     cursor: pointer;
-}
+  }
+  .following:hover{
+    cursor: pointer;
+  }
   
+  .followers:hover{
+    cursor: pointer;
+  }

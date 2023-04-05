@@ -20,6 +20,7 @@ function App() {
         <Route path="/forgotPassword" element={<FrogotPassword />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/edit/:profileName" element={<ProfileEditor />} />
+        <Route path="/edit/:profileName" element={<ProfileEditor />} />
       </Routes>
     </Sidebar>
   );

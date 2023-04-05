@@ -72,3 +72,11 @@ export const updateMe = function (data) {
 export const logout = function () {
   return instance.get("/logout", customConfig);
 };
+
+export const fetchFollower = function (profileName, page) {
+  return instance.get(`/api/followers/${profileName}/${page}`, customConfig);
+};
+
+export const fetchFollowing = function (profileName, page) {
+  return instance.get(`/api/following/${profileName}/${page}`, customConfig);
+};
