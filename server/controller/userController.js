@@ -144,7 +144,21 @@ exports.getFollower = async (req, res, next) => {
 
   const followerList = await Followers.aggregate([
     { $match: { userTo: new mongoose.Types.ObjectId(targetUser._id) } },
-    { $project: { userFrom: 1 } },
+    {
+      $lookup: {
+        from: "users",
+        let: { userFrom: "$userFrom" },
+        pipeline: [{ $match: { $expr: { $eq: ["$$userFrom", "$_id"] } } }],
+        as: "Users",
+      },
+    },
+    {
+      $addFields: {
+        avatar: { $arrayElemAt: ["$Users.avatar", 0] },
+        profileName: { $arrayElemAt: ["$Users.profileName", 0] },
+      },
+    },
+    { $project: { avatar: 1, profileName: 1, _id: 0 } },
     { $skip: 50 * (req.params.page - 1) },
     { $limit: 50 },
   ]);
@@ -156,7 +170,21 @@ exports.getFollowing = async (req, res, next) => {
   });
   const followingList = await Followers.aggregate([
     { $match: { userFrom: new mongoose.Types.ObjectId(targetUser._id) } },
-    { $project: { userTo: 1 } },
+    {
+      $lookup: {
+        from: "users",
+        let: { userTo: "$userTo" },
+        pipeline: [{ $match: { $expr: { $eq: ["$$userTo", "$_id"] } } }],
+        as: "Users",
+      },
+    },
+    {
+      $addFields: {
+        avatar: { $arrayElemAt: ["$Users.avatar", 0] },
+        profileName: { $arrayElemAt: ["$Users.profileName", 0] },
+      },
+    },
+    { $project: { avatar: 1, profileName: 1, _id: 0 } },
     { $skip: 50 * (req.params.page - 1) },
     { $limit: 50 },
   ]);
