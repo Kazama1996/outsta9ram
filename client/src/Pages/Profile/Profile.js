@@ -1,5 +1,5 @@
 import "../../App.css";
-import { getUserProfile, protect } from "../../global/api";
+import { getUserProfile, protect, isAlreadyFollowed } from "../../global/api";
 import { Children, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import PostGallery from "./component/PostGallery.js";
@@ -11,6 +11,7 @@ function Profile() {
   const [userProfile, setUserProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [isSameUser, setIsSameUser] = useState(true);
+  const [alreadyFollowed, setAlreadyFollowed] = useState(false);
   const location = useLocation();
 
   const handleClick = function (e) {
@@ -24,16 +25,17 @@ function Profile() {
         const res = await getUserProfile(
           window.location.pathname.split("/")[2]
         );
-        console.log(res);
         setUserProfile(res.data[0]);
         setPosts(res.data[0].Posts);
         if (
           currentUser.profileName === window.location.pathname.split("/")[2]
         ) {
-          console.log("Same");
           setIsSameUser(true);
         } else {
-          console.log("Not Same");
+          const isFollowed = await isAlreadyFollowed(
+            window.location.pathname.split("/")[2]
+          );
+          setAlreadyFollowed(isFollowed.data);
           setIsSameUser(false);
         }
       } catch (err) {
@@ -47,13 +49,23 @@ function Profile() {
   if (!posts.length) {
     return (
       <div className="page-profile">
-        <ProfileHeader userProfile={userProfile} isSameUser={isSameUser} />
+        <ProfileHeader
+          userProfile={userProfile}
+          isSameUser={isSameUser}
+          alreadyFollowed={alreadyFollowed}
+          setAlreadyFollowed={setAlreadyFollowed}
+        />
       </div>
     );
   } else {
     return (
       <div className="page-profile">
-        <ProfileHeader userProfile={userProfile} isSameUser={isSameUser} />
+        <ProfileHeader
+          userProfile={userProfile}
+          isSameUser={isSameUser}
+          alreadyFollowed={alreadyFollowed}
+          setAlreadyFollowed={setAlreadyFollowed}
+        />
         <PostGallery posts={posts} />
       </div>
     );

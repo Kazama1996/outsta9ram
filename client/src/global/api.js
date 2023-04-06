@@ -80,3 +80,15 @@ export const fetchFollower = function (profileName, page) {
 export const fetchFollowing = function (profileName, page) {
   return instance.get(`/api/following/${profileName}/${page}`, customConfig);
 };
+
+export const isAlreadyFollowed = function (profileName) {
+  return instance.get(`/api/followers/${profileName}`, customConfig);
+};
+
+export const followUser = function (profileName) {
+  return instance.post(`/api/followers/${profileName}`, customConfig);
+};
+
+export const unfollowUser = function (profileName) {
+  return instance.delete(`/api/followers/${profileName}`, customConfig);
+};
