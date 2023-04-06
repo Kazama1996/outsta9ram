@@ -237,3 +237,21 @@ exports.getAllUser = async (req, res, next) => {
   const AllUser = await User.find();
   res.status(200).send(AllUser);
 };
+
+exports.isAlreadyFollowed = async (req, res, next) => {
+  const targetUser = await User.findOne({
+    profileName: req.params.profileName,
+  });
+  if (!targetUser) {
+    return next(new AppError("Can not found user with this profile name", 404));
+  }
+  const followed = await Followers.findOne({
+    userFrom: req.user.id,
+    userTo: new mongoose.Types.ObjectId(targetUser._id),
+  });
+  if (!followed) {
+    res.status(200).send(false);
+  } else {
+    res.status(200).send(true);
+  }
+};
