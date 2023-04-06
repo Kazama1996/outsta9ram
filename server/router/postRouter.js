@@ -6,22 +6,22 @@ const {
   likePost,
   cancelLikePost,
   getAllPostByUser,
-  createComment,
   getPostAttribute,
-  getComment,
   isLikeBefore,
 } = require("../controller/postController");
 
 const postRouter = express.Router();
 
+// Upload post
 postRouter.get("/api/preSignUrl", protect, getPreSignUrl);
 postRouter.post("/api/post", protect, createPost);
+// Like or cancel like a post
 postRouter.post("/api/like/:postId", protect, likePost);
 postRouter.delete("/api/like/:postId", protect, cancelLikePost);
-postRouter.get("/api/post/:profileName", protect, getAllPostByUser);
 postRouter.get("/api/like/:postId", protect, isLikeBefore);
-postRouter.post("/api/comment/:postId", protect, createComment);
+// show information on the post window.
 postRouter.get("/api/p/:postId", protect, getPostAttribute);
-postRouter.get("/api/comment/:postId", protect, getComment);
+// dev-test
+postRouter.get("/api/post/:profileName", protect, getAllPostByUser);
 
 module.exports = postRouter;
