@@ -36,7 +36,7 @@ export const protect = async function () {
   return instance.get("/api/protectRoute", customConfig);
 };
 export const getUserProfile = function (user) {
-  return instance.get(`/api/${user}`, customConfig);
+  return instance.get(`/api/profile/${user}`, customConfig);
 };
 export const getPostAttribute = function (postId) {
   return instance.get(`/api/p/${postId}`, customConfig);
@@ -91,4 +91,8 @@ export const followUser = function (profileName) {
 
 export const unfollowUser = function (profileName) {
   return instance.delete(`/api/followers/${profileName}`, customConfig);
+};
+
+export const searchUser = function (profileName) {
+  return instance.get(`/api/${profileName}`, customConfig);
 };

@@ -110,11 +110,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     "signature",
     "avatar"
   );
-  console.log(req.body);
   if (filteredBody.avatar) {
     const path = filteredBody.avatar;
     filteredBody.avatar = process.env.AWS_S3BUCKET_URL + path;
-    console.log("haveAvatar");
   }
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -128,6 +126,21 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).send(updatedUser);
 });
 
+exports.findUser = async (req, res, next) => {
+  const userList = await User.find({
+    profileName: { $regex: `^${req.params.profileName}\w*` },
+  }).limit(10);
+  if (!userList) {
+    res.status(200).send([]);
+  }
+  res.status(200).send(userList);
+};
+
+// for testing
+exports.getAllUser = async (req, res, next) => {
+  const AllUser = await User.find();
+  res.status(200).send(AllUser);
+};
 exports.getReview = async (req, res, next) => {
   const reviewList = await Review.aggregate([
     { $sort: { index: -1 } },
@@ -135,9 +148,4 @@ exports.getReview = async (req, res, next) => {
     { $limit: 3 },
   ]);
   res.status(200).send(reviewList);
-};
-// for testing
-exports.getAllUser = async (req, res, next) => {
-  const AllUser = await User.find();
-  res.status(200).send(AllUser);
 };

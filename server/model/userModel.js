@@ -66,6 +66,8 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
+userSchema.index({ profileName: 1, createdAt: 1 });
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
