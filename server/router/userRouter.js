@@ -13,13 +13,8 @@ const {
 const {
   getUserProfile,
   getAllUser,
-  followUser,
-  unfollowUser,
   updateMe,
-  getFollower,
-  getFollowing,
   getReview,
-  isAlreadyFollowed,
 } = require("../controller/userController");
 
 const userRouter = express.Router();
@@ -36,12 +31,6 @@ userRouter.patch("/api/updatePassword", protect, updatePassword);
 // profile
 userRouter.get("/api/:profileName", protect, getUserProfile);
 userRouter.patch("/api/updateMe", protect, updateMe);
-// follower
-userRouter.post("/api/followers/:profileName", protect, followUser);
-userRouter.delete("/api/followers/:profileName", protect, unfollowUser);
-userRouter.get("/api/followers/:profileName/:page", protect, getFollower);
-userRouter.get("/api/following/:profileName/:page", protect, getFollowing);
-userRouter.get("/api/followers/:profileName", protect, isAlreadyFollowed);
 // dev-test
 userRouter.get("/api/users", getAllUser);
 userRouter.get("/api/review/:page", protect, getReview);

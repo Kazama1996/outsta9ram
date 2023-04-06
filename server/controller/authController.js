@@ -1,11 +1,3 @@
-//import mongoose from "mongoose";
-//import { User } from "../model/userModel.js";
-//import jwt from "jsonwebtoken";
-//import { AppError } from "../utils/appError.js";
-//import { catchAsync } from "../utils/catchAsync.js";
-//import bcrypt from "bcrypt";
-//import { promisify } from "util";
-
 const mongoose = require("mongoose");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");

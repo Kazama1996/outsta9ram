@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const postRouter = require("./router/postRouter");
 const userRouter = require("./router/userRouter");
+const commentRouter = require("./router/commentRouter");
+const followerRouter = require("./router/followerRouter");
 const errorHandler = require("./utils/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -30,6 +32,8 @@ mongoose.connect(DB).then(
 app.use(express.json());
 app.use(postRouter);
 app.use(userRouter);
+app.use(commentRouter);
+app.use(followerRouter);
 
 app.use(errorHandler);
 app.listen(process.env.PORT, () => {

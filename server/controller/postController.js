@@ -1,11 +1,10 @@
 const Post = require("../model/postModel");
 const Like = require("../model/likeModel");
-const Comment = require("../model/commentModel");
 const User = require("../model/userModel");
 const AppError = require("../utils/appError");
-const { formatDistance } = require("date-fns");
 const mongoose = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
+const { formatDistance } = require("date-fns");
 
 exports.createPost = catchAsync(async (req, res, next) => {
   req.body.createdAt = Date.now();
@@ -37,16 +36,6 @@ exports.cancelLikePost = catchAsync(async (req, res, next) => {
     userId: req.user.id,
   });
   res.status(200).send("you cancel like this post");
-});
-
-exports.createComment = catchAsync(async (req, res, next) => {
-  const newComment = await Comment.create({
-    userId: req.user.id,
-    postId: req.params.postId,
-    content: req.body.content,
-    createdAt: Date.now(),
-  });
-  res.status(200).send("you comment a post");
 });
 
 exports.getPostAttribute = async (req, res, next) => {
@@ -94,41 +83,6 @@ exports.getPostAttribute = async (req, res, next) => {
   );
 
   res.status(200).send(postAttribute);
-};
-
-exports.getComment = async (req, res, next) => {
-  const comment = await Comment.aggregate([
-    { $match: { postId: new mongoose.Types.ObjectId(req.params.postId) } },
-    {
-      $sort: { createdAt: -1 },
-    },
-    {
-      $lookup: {
-        from: "users",
-        let: { userId: "$userId" },
-        pipeline: [
-          { $match: { $expr: { $eq: ["$$userId", "$_id"] } } },
-          { $project: { profileName: 1, avatar: 1, _id: 0 } },
-        ],
-        as: "User",
-      },
-    },
-    {
-      $addFields: {
-        profileName: { $arrayElemAt: ["$User.profileName", 0] },
-        avatar: { $arrayElemAt: ["$User.avatar", 0] },
-      },
-    },
-    {
-      $project: { createdAt: 1, content: 1, _id: 0, avatar: 1, profileName: 1 },
-    },
-  ]);
-  comment.map((el) => {
-    el.createdAt = formatDistance(el.createdAt, Date.now(), {
-      addSuffix: true,
-    });
-  });
-  res.status(200).send(comment);
 };
 
 exports.isLikeBefore = async (req, res, next) => {
