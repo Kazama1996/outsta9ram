@@ -2,11 +2,17 @@ import gear from "../../../material/setting.png";
 import "../style/PostHeader.css";
 import SettingMenu from "./SettingMenu";
 import { useState } from "react";
-import { fetchFollower, fetchFollowing } from "../../../global/api";
+import {
+  fetchFollower,
+  fetchFollowing,
+  followUser,
+  unfollowUser,
+} from "../../../global/api";
 import FollowerList from "./FollowerList";
 
 function ProfileHeader(props) {
-  const { userProfile, isSameUser } = props;
+  const { userProfile, isSameUser, alreadyFollowed, setAlreadyFollowed } =
+    props;
   const [isDisplaySetting, setIsDisplaySetting] = useState(false);
   const [followerList, setFollowerList] = useState([]);
   const [isDisplayFollowerList, setDisplayFollowerList] = useState(false);
@@ -29,6 +35,18 @@ function ProfileHeader(props) {
   const openSetting = function () {
     setIsDisplaySetting(true);
   };
+
+  const FollowUser = async function (e) {
+    await followUser(window.location.pathname.split("/")[2]);
+    setAlreadyFollowed((current) => !current);
+    window.location.reload(true);
+  };
+  const unFollowUser = async function (e) {
+    await unfollowUser(window.location.pathname.split("/")[2]);
+    setAlreadyFollowed((current) => !current);
+    window.location.reload(true);
+  };
+
   return (
     <div className="header-profile">
       <div className="avatar-region">
@@ -39,8 +57,10 @@ function ProfileHeader(props) {
           {window.location.pathname.split("/")[2]}
           {isSameUser ? (
             <img src={gear} onClick={openSetting} />
+          ) : alreadyFollowed ? (
+            <button onClick={unFollowUser}>unFollow</button>
           ) : (
-            <button>Follow</button>
+            <button onClick={FollowUser}>Follow</button>
           )}
         </div>
         <div className="post-and-followers">
