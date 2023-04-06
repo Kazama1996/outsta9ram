@@ -62,7 +62,12 @@ function FollowerList(props) {
         endMessage={<h4>End....</h4>}
       >
         {followerList.map((item) => {
-          return <FollowerItem follower={item} />;
+          return (
+            <FollowerItem
+              follower={item}
+              setDisplayFollowerList={setDisplayFollowerList}
+            />
+          );
         })}
       </InfiniteScroll>
     </Modal>

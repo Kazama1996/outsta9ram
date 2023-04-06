@@ -1,14 +1,17 @@
 import "../../App.css";
 import { getUserProfile, protect } from "../../global/api";
 import { Children, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import PostGallery from "./component/PostGallery.js";
 import ProfileHeader from "./component/ProfileHeader.js";
 import PostWindow from "../../component/PostWindow";
+
 function Profile() {
   //return <h1>This is profile</h1>;
   const [userProfile, setUserProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [isSameUser, setIsSameUser] = useState(true);
+  const location = useLocation();
 
   const handleClick = function (e) {
     // pop up the postWindow
@@ -18,10 +21,10 @@ function Profile() {
     async function fetchProfile() {
       try {
         const currentUser = (await protect()).data;
-        console.log(currentUser.profileName);
         const res = await getUserProfile(
           window.location.pathname.split("/")[2]
         );
+        console.log(res);
         setUserProfile(res.data[0]);
         setPosts(res.data[0].Posts);
         if (
@@ -39,7 +42,7 @@ function Profile() {
     }
 
     fetchProfile();
-  }, []);
+  }, [location]);
 
   if (!posts.length) {
     return (

@@ -11,7 +11,13 @@
     border-radius: 50%;
 }
 
+.profileName-comment:hover{
+    cursor: pointer;
+}
 
+.text-comment{
+    display: flex;
+}
 .createdAt-comment{
     font-size:12px;
 }

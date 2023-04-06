@@ -1,7 +1,12 @@
 .container-follower-item{
     display: flex;
     margin-bottom: 5px;
+    width: 190px;
 
+}
+
+.container-follower-item:hover{
+    cursor: pointer;
 }
 
 .avatar-follower{

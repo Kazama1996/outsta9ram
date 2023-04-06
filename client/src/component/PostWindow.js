@@ -80,7 +80,13 @@ function PostWindow(props) {
         <div className="content">{postAttrubute.content}</div>
         <div className="comment">
           {comment.map((el, index) => {
-            return <CommentItem element={el} key={index} />;
+            return (
+              <CommentItem
+                element={el}
+                key={index}
+                setIsDisPlayPostWindow={setIsDisPlayPostWindow}
+              />
+            );
           })}
         </div>
         <div>
