@@ -3,7 +3,7 @@ import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchFollower, fetchFollowing } from "../../../global/api";
 import "../style/FollowerList.css";
-import FollowerItem from "../../../component/FollowerItem";
+import UserItem from "../../../component/UserItem";
 function FollowerList(props) {
   const {
     followerList,
@@ -63,10 +63,7 @@ function FollowerList(props) {
       >
         {followerList.map((item) => {
           return (
-            <FollowerItem
-              follower={item}
-              setDisplayFollowerList={setDisplayFollowerList}
-            />
+            <UserItem user={item} setDisplayUserList={setDisplayFollowerList} />
           );
         })}
       </InfiniteScroll>
