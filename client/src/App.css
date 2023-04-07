@@ -11,6 +11,9 @@
   height: 100vh;
   background-color: red;
 }
+.btn-sidebar:hover{
+  cursor: pointer;
+}
 
 .page-feed{
   display: flex;
