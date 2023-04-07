@@ -74,7 +74,7 @@ exports.unfollowUser = async (req, res, next) => {
 };
 exports.followUser = catchAsync(async (req, res, next) => {
   const targetUser = await User.findOne({
-    profileName: req.body.profileName,
+    profileName: req.params.profileName,
   });
   if (!targetUser) {
     return next(

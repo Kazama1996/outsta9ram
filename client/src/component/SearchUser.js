@@ -10,9 +10,11 @@ function SearchUser(props) {
     setIsDisplaySearch(false);
   };
   const handleSearch = async function (e) {
-    setUserList([]);
-    const res = await searchUser(e.target.value);
-    setUserList(res.data);
+    if (e.target.value !== "") {
+      setUserList([]);
+      const res = await searchUser(e.target.value);
+      setUserList(res.data);
+    }
   };
   return (
     <Modal

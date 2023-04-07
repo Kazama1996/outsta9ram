@@ -6,7 +6,6 @@ import PostGallery from "./component/PostGallery.js";
 import ProfileHeader from "./component/ProfileHeader.js";
 
 function Profile() {
-  //return <h1>This is profile</h1>;
   const [userProfile, setUserProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [isSameUser, setIsSameUser] = useState(true);

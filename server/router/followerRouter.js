@@ -5,12 +5,11 @@ const {
   unfollowUser,
   getFollower,
   getFollowing,
-  isAlreadyFollowed,
 } = require("../controller/followerController");
 const followerRouter = express.Router();
 // follow/unfollow a user.
-followerRouter.post("/api/v1/followers", protect, followUser);
-followerRouter.delete("/api/v1/followers", protect, unfollowUser);
+followerRouter.post("/api/v1/followers/:profileName", protect, followUser);
+followerRouter.delete("/api/v1/followers/:profileName", protect, unfollowUser);
 // get follower and following list of a user.
 followerRouter.get(
   "/api/v1/followers/:profileName/:pageNum",
