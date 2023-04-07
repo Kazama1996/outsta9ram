@@ -3,23 +3,6 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../model/userModel");
 const mongoose = require("mongoose");
-exports.isAlreadyFollowed = async (req, res, next) => {
-  const targetUser = await User.findOne({
-    profileName: req.params.profileName,
-  });
-  if (!targetUser) {
-    return next(new AppError("Can not found user with this profile name", 404));
-  }
-  const followed = await Followers.findOne({
-    userFrom: req.user.id,
-    userTo: new mongoose.Types.ObjectId(targetUser._id),
-  });
-  if (!followed) {
-    res.status(200).send(false);
-  } else {
-    res.status(200).send(true);
-  }
-};
 
 exports.getFollowing = async (req, res, next) => {
   const targetUser = await User.findOne({
@@ -42,7 +25,7 @@ exports.getFollowing = async (req, res, next) => {
       },
     },
     { $project: { avatar: 1, profileName: 1, _id: 0 } },
-    { $skip: 50 * (req.params.page - 1) },
+    { $skip: 50 * (req.params.pageNum - 1) },
     { $limit: 50 },
   ]);
   res.status(200).send(followingList);
@@ -70,7 +53,7 @@ exports.getFollower = async (req, res, next) => {
       },
     },
     { $project: { avatar: 1, profileName: 1, _id: 0 } },
-    { $skip: 50 * (req.params.page - 1) },
+    { $skip: 50 * (req.params.pageNum - 1) },
     { $limit: 50 },
   ]);
   res.status(200).send(followerList);
@@ -91,7 +74,7 @@ exports.unfollowUser = async (req, res, next) => {
 };
 exports.followUser = catchAsync(async (req, res, next) => {
   const targetUser = await User.findOne({
-    profileName: req.params.profileName,
+    profileName: req.body.profileName,
   });
   if (!targetUser) {
     return next(

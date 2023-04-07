@@ -18,21 +18,21 @@ exports.createPost = catchAsync(async (req, res, next) => {
 exports.likePost = catchAsync(async (req, res, next) => {
   const check = await Like.findOne({
     userId: req.user.id,
-    postId: req.params.postId,
+    postId: req.body.postId,
   });
   if (check) {
     return next(new AppError("You already give like to this post", 401));
   }
   const newLike = await Like.create({
     userId: req.user.id,
-    postId: req.params.postId,
+    postId: req.body.postId,
   });
   res.status(200).send("you like a post");
 });
 
 exports.cancelLikePost = catchAsync(async (req, res, next) => {
   const targetLike = await Like.findOneAndDelete({
-    postId: req.params.postId,
+    postId: req.body.postId,
     userId: req.user.id,
   });
   res.status(200).send("you cancel like this post");
@@ -67,12 +67,19 @@ exports.getPostAttribute = async (req, res, next) => {
         likeQuantity: { $size: ["$Likes"] },
         author: { $arrayElemAt: ["$User.profileName", 0] },
         avatar: { $arrayElemAt: ["$User.avatar", 0] },
-
-        //commentQuantity: { $size: ["$Comments"] },
+        isLiked: {
+          $in: [new mongoose.Types.ObjectId(req.user.id), "$Likes.userId"],
+        },
       },
     },
     {
-      $project: { _id: 0, __v: 0, userId: 0, Likes: 0, User: 0 },
+      $project: {
+        _id: 0,
+        __v: 0,
+        userId: 0,
+        Likes: 0,
+        User: 0,
+      },
     },
   ]);
 
@@ -83,18 +90,6 @@ exports.getPostAttribute = async (req, res, next) => {
   );
 
   res.status(200).send(postAttribute);
-};
-
-exports.isLikeBefore = async (req, res, next) => {
-  const targetLike = await Like.findOne({
-    postId: new mongoose.Types.ObjectId(req.params.postId),
-    userId: req.user.id,
-  });
-  if (targetLike) {
-    res.status(200).send(true);
-  } else {
-    res.status(200).send(false);
-  }
 };
 
 // for testing

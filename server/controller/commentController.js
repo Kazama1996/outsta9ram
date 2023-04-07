@@ -7,7 +7,7 @@ const { formatDistance } = require("date-fns");
 exports.createComment = catchAsync(async (req, res, next) => {
   const newComment = await Comment.create({
     userId: req.user.id,
-    postId: req.params.postId,
+    postId: req.body.postId,
     content: req.body.content,
     createdAt: Date.now(),
   });

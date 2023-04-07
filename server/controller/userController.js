@@ -2,6 +2,7 @@ const User = require("../model/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const Review = require("../model/reviewModel");
+const { default: mongoose } = require("mongoose");
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -77,6 +78,9 @@ exports.getUserProfile = async (req, res, next) => {
         PostQuantity: { $size: "$Posts" },
         FollowerQuantity: { $size: "$Follower" },
         FollowingQuantity: { $size: "$Following" },
+        isFollowed: {
+          $in: [new mongoose.Types.ObjectId(req.user.id), "$Follower.userFrom"],
+        },
       },
     },
     {
@@ -89,6 +93,7 @@ exports.getUserProfile = async (req, res, next) => {
         FollowingQuantity: 1,
         signature: 1,
         avatar: 1,
+        isFollowed: 1,
       },
     },
   ]);
