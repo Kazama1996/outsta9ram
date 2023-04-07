@@ -14,21 +14,22 @@ function ProfileHeader(props) {
   const { userProfile, isSameUser, isFollowed, setIsFollowed } = props;
   const [isDisplaySetting, setIsDisplaySetting] = useState(false);
   const [followerList, setFollowerList] = useState([]);
-  const [isOpenModal, setDisplayFollowerList] = useState(false);
-  const [isDisplayFollowing, setIsDisplayFollowing] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+
   const openFollowingList = async function () {
     const res = await fetchFollowing(userProfile.profileName, 1);
     const data = res.data;
     setFollowerList(data);
-    setIsDisplayFollowing(true);
-    setDisplayFollowerList(true);
+    setIsFollowing(true);
+    setIsOpenModal(true);
   };
   const openFollowerList = async function () {
     const res = await fetchFollower(userProfile.profileName, 1);
     const data = res.data;
     setFollowerList(data);
-    setIsDisplayFollowing(true);
-    setDisplayFollowerList(true);
+    setIsFollowing(false);
+    setIsOpenModal(true);
   };
 
   const openSetting = function () {
@@ -84,10 +85,10 @@ function ProfileHeader(props) {
       <FollowerList
         followerList={followerList}
         setFollowerList={setFollowerList}
-        isDisplayFollowerList={isDisplayFollowerList}
-        setDisplayFollowerList={setDisplayFollowerList}
-        isFollower={isFollower}
-        setIsFollower={setIsFollower}
+        isOpenModal={isOpenModal}
+        setIsOpenModal={setIsOpenModal}
+        isFollowing={isFollowing}
+        setIsFollowing={setIsFollowing}
         userProfile={userProfile}
       />
     </div>

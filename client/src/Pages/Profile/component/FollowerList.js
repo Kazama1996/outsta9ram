@@ -8,17 +8,16 @@ function FollowerList(props) {
   const {
     followerList,
     setFollowerList,
-    isDisplayFollowerList,
-    setDisplayFollowerList,
+    isOpenModal,
+    setIsOpenModal,
     isFollower,
-    setIsFollower,
     userProfile,
   } = props;
   const [hasMore, sethasMore] = useState(true);
   const [pageNum, setPageNum] = useState(2);
 
   const closeModal = function () {
-    setDisplayFollowerList(false);
+    setIsOpenModal(false);
     setFollowerList([]);
     window.location.reload(true);
   };
@@ -47,7 +46,7 @@ function FollowerList(props) {
   };
   return (
     <Modal
-      isOpen={isDisplayFollowerList}
+      isOpen={isOpenModal}
       className="list-follower"
       ariaHideApp={false}
       overlayClassName="editor-post-overlay"
@@ -62,9 +61,7 @@ function FollowerList(props) {
         endMessage={<h4>End....</h4>}
       >
         {followerList.map((item) => {
-          return (
-            <UserItem user={item} setDisplayUserList={setDisplayFollowerList} />
-          );
+          return <UserItem user={item} setDisplayUserList={setIsOpenModal} />;
         })}
       </InfiniteScroll>
     </Modal>

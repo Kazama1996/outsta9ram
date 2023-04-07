@@ -35,6 +35,7 @@ userRouter.patch("/api/v1/auth/reset-password", resetPassword);
 userRouter.get("/api/v1/profiles/:profileName", protect, getUserProfile);
 userRouter.patch("/api/v1/profiles", protect, updateMe);
 userRouter.patch("/api/v1/profiles/update-password", protect, updatePassword);
+// user
 userRouter.get("/api/v1/users/:profileName", protect, findUser);
 
 // dev-test
