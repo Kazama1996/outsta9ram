@@ -7,16 +7,19 @@ const customConfig = {
 };
 
 export const signup = function (data) {
-  return instance.post("signup", data, customConfig);
+  return instance.post("/api/v1/auth/signup", data, customConfig);
 };
 export const login = function (data) {
-  return instance.post("login", data, customConfig);
+  return instance.post("/api/v1/auth/login", data, customConfig);
+};
+export const logout = function () {
+  return instance.get("/api/v1/auth/logout", customConfig);
 };
 export const forgotPassword = function (data) {
-  return instance.post("/api/forgotPassword", data, customConfig);
+  return instance.post("/api/v1/auth/forgotPassword", data, customConfig);
 };
 export const getPreSignUrl = function () {
-  return instance.get("/api/preSignUrl", customConfig);
+  return instance.get("/api/v1/posts/presign-url", customConfig);
 };
 
 export const uploadImage = function (preSignUrl, file) {
@@ -29,70 +32,71 @@ export const uploadImage = function (preSignUrl, file) {
 };
 
 export const createPost = function (data) {
-  return instance.post("/api/post", data, customConfig);
+  return instance.post("/api/v1/posts", data, customConfig);
 };
 
 export const protect = async function () {
-  return instance.get("/api/protectRoute", customConfig);
+  return instance.get("/api/v1/auth/route-protection", customConfig);
 };
-export const getUserProfile = function (user) {
-  return instance.get(`/api/profile/${user}`, customConfig);
+export const getUserProfile = function (profileName) {
+  return instance.get(`/api/v1/profiles/${profileName}`, customConfig);
 };
 export const getPostAttribute = function (postId) {
-  return instance.get(`/api/p/${postId}`, customConfig);
+  return instance.get(`/api/v1/posts/${postId}`, customConfig);
 };
 export const getComment = function (postId) {
-  return instance.get(`/api/comment/${postId}`, customConfig);
+  return instance.get(`/api/v1/comments/${postId}`, customConfig);
 };
 
-export const isLikeBefore = function (postId) {
-  return instance.get(`/api/like/${postId}`, customConfig);
-};
-
-export const cancelLike = function (postId) {
-  return instance.delete(`/api/like/${postId}`, customConfig);
-};
 export const likePost = function (postId) {
-  return instance.post(`/api/like/${postId}`, customConfig);
+  return instance.post(`/api/v1/likes/${postId}`, customConfig);
+};
+export const cancelLike = function (postId) {
+  return instance.delete(`/api/v1/likes/${postId}`, customConfig);
 };
 
-export const createComment = function (postId, data) {
-  return instance.post(`/api/comment/${postId}`, data, customConfig);
+export const createComment = function (data) {
+  return instance.post("/api/v1/comments", data, customConfig);
 };
 
 export const resetPassword = function (data) {
-  return instance.patch("/api/passwordReset", data, customConfig);
+  return instance.patch("/api/v1/auth/reset-password", data, customConfig);
 };
 export const updatePassword = function (data) {
-  return instance.patch("/api/updatePassword", data, customConfig);
+  return instance.patch("/api/v1/profiles/update-password", data, customConfig);
 };
 export const updateMe = function (data) {
-  return instance.patch("/api/updateMe", data, customConfig);
-};
-export const logout = function () {
-  return instance.get("/logout", customConfig);
+  return instance.patch("/api/v1/users", data, customConfig);
 };
 
-export const fetchFollower = function (profileName, page) {
-  return instance.get(`/api/followers/${profileName}/${page}`, customConfig);
+export const fetchFollower = function (profileName, pageNum) {
+  return instance.get(
+    `/api/v1/followers/${profileName}/${pageNum}`,
+    customConfig
+  );
 };
 
-export const fetchFollowing = function (profileName, page) {
-  return instance.get(`/api/following/${profileName}/${page}`, customConfig);
+export const fetchFollowing = function (profileName, pageNum) {
+  return instance.get(
+    `/api/v1/following/${profileName}/${pageNum}`,
+    customConfig
+  );
 };
 
-export const isAlreadyFollowed = function (profileName) {
-  return instance.get(`/api/followers/${profileName}`, customConfig);
+export const followUser = function (prifileName, pageNum) {
+  return instance.post(
+    `/api/v1/followers/${prifileName}/${pageNum}`,
+    customConfig
+  );
 };
 
-export const followUser = function (profileName) {
-  return instance.post(`/api/followers/${profileName}`, customConfig);
-};
-
-export const unfollowUser = function (profileName) {
-  return instance.delete(`/api/followers/${profileName}`, customConfig);
+export const unfollowUser = function (prifileName, pageNum) {
+  return instance.delete(
+    `/api/v1/followers/${prifileName}/${pageNum}`,
+    customConfig
+  );
 };
 
 export const searchUser = function (profileName) {
-  return instance.get(`/api/${profileName}`, customConfig);
+  return instance.get(`/api/v1/users/${profileName}`, customConfig);
 };

@@ -1,26 +1,22 @@
 import Modal from "react-modal";
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import "./style/PostWindow.css";
 import CommentItem from "./CommentItem";
 import heart from "../material/heart.png";
 import fillheart from "../material/fillheart.png";
 import InputField from "./InputField";
 import { createComment } from "../global/api";
-import {
-  isLikeBefore,
-  likePost,
-  cancelLike,
-  getPostAttribute,
-} from "../global/api";
+import { likePost, cancelLike } from "../global/api";
+import { getPostAttribute } from "../global/api";
 function PostWindow(props) {
   const {
     setIsDisPlayPostWindow,
     isDisplayPostWindow,
     postAttrubute,
-    closeModal,
+    setPostAttribute,
     comment,
-    likeState,
-    setLikeState,
+    isLiked,
+    setIsLiked,
     postId,
   } = props;
 
@@ -41,16 +37,26 @@ function PostWindow(props) {
 
   const handleLike = async function () {
     let res = "";
+
     try {
-      if (likeState) {
+      if (isLiked) {
         res = await cancelLike(postId);
+        console.log(res);
       } else {
         res = await likePost(postId);
+        console.log(res);
       }
     } catch (err) {
       console.log(err);
     }
-    setLikeState((current) => !current);
+    setIsLiked((current) => !current);
+  };
+
+  const closeModal = async (e) => {
+    setIsDisPlayPostWindow(false);
+    const att = await getPostAttribute(postId);
+    setPostAttribute(att.data[0]);
+    window.location.reload(true);
   };
   return (
     <Modal
@@ -91,7 +97,7 @@ function PostWindow(props) {
         </div>
         <div>
           <div className="btn-like">
-            <img src={likeState ? fillheart : heart} onClick={handleLike} />
+            <img src={isLiked ? fillheart : heart} onClick={handleLike} />
           </div>
           <div>{postAttrubute.createdAt}</div>
         </div>
