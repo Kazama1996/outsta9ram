@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import PostEditor from "./PostEditor";
 import home from "../material/home.png";
 import create from "../material/create.png";
@@ -8,6 +7,7 @@ import search from "../material/search.png";
 import { protect } from "../global/api";
 import { useNavigate } from "react-router-dom";
 import SearchUser from "./SearchUser";
+
 function Sidebar({ children }) {
   const [filePath, setFilePath] = useState("");
   const [isDisplayEditor, setIsDisplayEditor] = useState(false);
@@ -52,10 +52,25 @@ function Sidebar({ children }) {
   return (
     <div className="app">
       <div className="sidebar">
-        <img src={home} className="" id="0" onClick={handleClick} />
-        <img src={search} className="" id="1" onClick={handleClick} />
-        <img src={create} className="" id="2" onClick={handleClick} />
-        <img src={profile} className="" id="3" onClick={handleClick} />
+        <img src={home} className="btn-sidebar" id="0" onClick={handleClick} />
+        <img
+          src={search}
+          className="btn-sidebar"
+          id="1"
+          onClick={handleClick}
+        />
+        <img
+          src={create}
+          className="btn-sidebar"
+          id="2"
+          onClick={handleClick}
+        />
+        <img
+          src={profile}
+          className="btn-sidebar"
+          id="3"
+          onClick={handleClick}
+        />
       </div>
       <div className="pages">
         <main>{children}</main>

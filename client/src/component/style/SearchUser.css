@@ -1,0 +1,7 @@
+.modal-search{
+    display: block;
+    width:200px;
+    height:400px;
+    background-color: aqua;
+    overflow-y: auto;
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { searchUser } from "../global/api";
 import UserItem from "./UserItem";
+import "./style/SearchUser.css";
 function SearchUser(props) {
   const { isDisplaySearch, setIsDisplaySearch } = props;
   const [userList, setUserList] = useState([]);
@@ -17,13 +18,19 @@ function SearchUser(props) {
     <Modal
       isOpen={isDisplaySearch}
       ariaHideApp={false}
+      className="modal-search"
       overlayClassName="editor-post-overlay"
       shouldCloseOnOverlayClick={true}
       onRequestClose={closeModal}
     >
       <input onChange={handleSearch}></input>
       {userList.map((item) => {
-        return <UserItem user={item} setDisplayUserList={setIsDisplaySearch} />;
+        return (
+          <div>
+            {" "}
+            <UserItem user={item} setDisplayUserList={setIsDisplaySearch} />
+          </div>
+        );
       })}
     </Modal>
   );
