@@ -1,5 +1,5 @@
 import InputField from "../../component/InputField";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../global/api";

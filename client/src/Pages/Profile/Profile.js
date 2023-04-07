@@ -1,17 +1,16 @@
 import "../../App.css";
-import { getUserProfile, protect, isAlreadyFollowed } from "../../global/api";
-import { Children, useEffect, useState } from "react";
+import { getUserProfile, protect } from "../../global/api";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import PostGallery from "./component/PostGallery.js";
 import ProfileHeader from "./component/ProfileHeader.js";
-import PostWindow from "../../component/PostWindow";
 
 function Profile() {
   //return <h1>This is profile</h1>;
   const [userProfile, setUserProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [isSameUser, setIsSameUser] = useState(true);
-  const [alreadyFollowed, setAlreadyFollowed] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
   const location = useLocation();
 
   const handleClick = function (e) {
@@ -22,20 +21,17 @@ function Profile() {
     async function fetchProfile() {
       try {
         const currentUser = (await protect()).data;
-        const res = await getUserProfile(
+        const { data: userProfile } = await getUserProfile(
           window.location.pathname.split("/")[2]
         );
-        setUserProfile(res.data[0]);
-        setPosts(res.data[0].Posts);
+        setUserProfile(userProfile[0]);
+        setPosts(userProfile[0].Posts);
         if (
           currentUser.profileName === window.location.pathname.split("/")[2]
         ) {
           setIsSameUser(true);
         } else {
-          const isFollowed = await isAlreadyFollowed(
-            window.location.pathname.split("/")[2]
-          );
-          setAlreadyFollowed(isFollowed.data);
+          setIsFollowed(userProfile[0].isFollowed);
           setIsSameUser(false);
         }
       } catch (err) {
@@ -52,8 +48,8 @@ function Profile() {
         <ProfileHeader
           userProfile={userProfile}
           isSameUser={isSameUser}
-          alreadyFollowed={alreadyFollowed}
-          setAlreadyFollowed={setAlreadyFollowed}
+          isFollowed={isFollowed}
+          setIsFollowed={setIsFollowed}
         />
       </div>
     );
@@ -63,8 +59,8 @@ function Profile() {
         <ProfileHeader
           userProfile={userProfile}
           isSameUser={isSameUser}
-          alreadyFollowed={alreadyFollowed}
-          setAlreadyFollowed={setAlreadyFollowed}
+          isFollowed={isFollowed}
+          setIsFollowed={setIsFollowed}
         />
         <PostGallery posts={posts} />
       </div>

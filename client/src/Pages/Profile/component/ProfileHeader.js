@@ -11,24 +11,23 @@ import {
 import FollowerList from "./FollowerList";
 
 function ProfileHeader(props) {
-  const { userProfile, isSameUser, alreadyFollowed, setAlreadyFollowed } =
-    props;
+  const { userProfile, isSameUser, isFollowed, setIsFollowed } = props;
   const [isDisplaySetting, setIsDisplaySetting] = useState(false);
   const [followerList, setFollowerList] = useState([]);
-  const [isDisplayFollowerList, setDisplayFollowerList] = useState(false);
-  const [isFollower, setIsFollower] = useState(false);
-  const getFollowing = async function () {
+  const [isOpenModal, setDisplayFollowerList] = useState(false);
+  const [isDisplayFollowing, setIsDisplayFollowing] = useState(false);
+  const openFollowingList = async function () {
     const res = await fetchFollowing(userProfile.profileName, 1);
     const data = res.data;
     setFollowerList(data);
-    setIsFollower(false);
+    setIsDisplayFollowing(true);
     setDisplayFollowerList(true);
   };
-  const getFollowers = async function () {
+  const openFollowerList = async function () {
     const res = await fetchFollower(userProfile.profileName, 1);
     const data = res.data;
     setFollowerList(data);
-    setIsFollower(true);
+    setIsDisplayFollowing(true);
     setDisplayFollowerList(true);
   };
 
@@ -38,12 +37,12 @@ function ProfileHeader(props) {
 
   const FollowUser = async function (e) {
     await followUser(window.location.pathname.split("/")[2]);
-    setAlreadyFollowed((current) => !current);
+    setIsFollowed((current) => !current);
     window.location.reload(true);
   };
   const unFollowUser = async function (e) {
     await unfollowUser(window.location.pathname.split("/")[2]);
-    setAlreadyFollowed((current) => !current);
+    setIsFollowed((current) => !current);
     window.location.reload(true);
   };
 
@@ -57,7 +56,7 @@ function ProfileHeader(props) {
           {window.location.pathname.split("/")[2]}
           {isSameUser ? (
             <img src={gear} onClick={openSetting} />
-          ) : alreadyFollowed ? (
+          ) : isFollowed ? (
             <button onClick={unFollowUser}>unFollow</button>
           ) : (
             <button onClick={FollowUser}>Follow</button>
@@ -65,10 +64,10 @@ function ProfileHeader(props) {
         </div>
         <div className="post-and-followers">
           <h2>Post:{userProfile.PostQuantity}</h2>
-          <h2 onClick={getFollowing} className="following">
+          <h2 onClick={openFollowingList} className="following">
             Following :{userProfile.FollowingQuantity}
           </h2>
-          <h2 onClick={getFollowers} className="followers">
+          <h2 onClick={openFollowerList} className="followers">
             Followers:
             {userProfile.FollowerQuantity}
           </h2>

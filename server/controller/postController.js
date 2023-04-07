@@ -18,23 +18,24 @@ exports.createPost = catchAsync(async (req, res, next) => {
 exports.likePost = catchAsync(async (req, res, next) => {
   const check = await Like.findOne({
     userId: req.user.id,
-    postId: req.body.postId,
+    postId: req.params.postId,
   });
   if (check) {
     return next(new AppError("You already give like to this post", 401));
   }
   const newLike = await Like.create({
     userId: req.user.id,
-    postId: req.body.postId,
+    postId: req.params.postId,
   });
   res.status(200).send("you like a post");
 });
 
 exports.cancelLikePost = catchAsync(async (req, res, next) => {
   const targetLike = await Like.findOneAndDelete({
-    postId: req.body.postId,
     userId: req.user.id,
+    postId: req.params.postId,
   });
+
   res.status(200).send("you cancel like this post");
 });
 
