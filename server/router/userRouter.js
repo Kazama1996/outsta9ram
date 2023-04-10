@@ -1,4 +1,5 @@
 const express = require("express");
+const { getSearchHistory, pushIntoQueue } = require("../cache/searchCache");
 const {
   signup,
   login,
@@ -37,9 +38,11 @@ userRouter.patch("/api/v1/profiles", protect, updateMe);
 userRouter.patch("/api/v1/profiles/update-password", protect, updatePassword);
 // user
 userRouter.get("/api/v1/users/:profileName", protect, findUser);
-
+userRouter.get("/api/v1/search-history", protect, getSearchHistory);
+userRouter.post("/api/v1/search-history", protect, pushIntoQueue);
 // dev-test
 userRouter.get("/api/users", getAllUser);
 userRouter.get("/api/review/:page", protect, getReview);
-
+userRouter.get("/api/search", protect, getSearchHistory);
+userRouter.post("/api/search", protect, pushIntoQueue);
 module.exports = userRouter;
