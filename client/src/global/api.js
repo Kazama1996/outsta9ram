@@ -41,6 +41,13 @@ export const updatePassword = function (data) {
 export const searchUser = function (profileName) {
   return instance.get(`/api/v1/users/${profileName}`, customConfig);
 };
+export const showSearchHistory = function () {
+  return instance.get(`/api/v1/search-history`, customConfig);
+};
+
+export const addSearchHistory = function (data) {
+  return instance.post(`/api/v1/search-history`, data, customConfig);
+};
 
 // post
 export const getPreSignUrl = function () {

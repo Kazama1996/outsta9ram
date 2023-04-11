@@ -4,7 +4,7 @@ import home from "../material/home.png";
 import create from "../material/create.png";
 import profile from "../material/profile.png";
 import search from "../material/search.png";
-import { protect } from "../global/api";
+import { protect, showSearchHistory } from "../global/api";
 import { useNavigate } from "react-router-dom";
 import SearchUser from "./SearchUser";
 
@@ -12,6 +12,8 @@ function Sidebar({ children }) {
   const [filePath, setFilePath] = useState("");
   const [isDisplayEditor, setIsDisplayEditor] = useState(false);
   const [isDisplaySearch, setIsDisplaySearch] = useState(false);
+  const [userList, setUserList] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(() => {
     const storedCount = localStorage.getItem("currentPage");
     return storedCount ? parseInt(storedCount, 10) : 0;
@@ -24,27 +26,51 @@ function Sidebar({ children }) {
   }, [currentPage]);
 
   const handleClick = async function (e) {
-    await protect()
-      .then((response) => {
-        switch (parseInt(e.target.id)) {
-          case 0:
-            navigate("/");
-            break;
-          case 1:
-            setIsDisplaySearch(true);
-            break;
-          case 2:
-            setIsDisplayEditor(true);
-            break;
-          case 3:
-            navigate(`/profile/${response.data.profileName}`);
-            break;
-        }
-      })
-      .catch((err) => {
-        setLoginState(false);
-        navigate(`/login`);
-      });
+    // await protect()
+    //   .then((response) => {
+    //     switch (parseInt(e.target.id)) {
+    //       case 0:
+    //         navigate("/");
+    //         break;
+    //       case 1:
+    //         const res = showSearchHistory();
+    //         console.log(res);
+    //         setIsDisplaySearch(true);
+    //         break;
+    //       case 2:
+    //         setIsDisplayEditor(true);
+    //         break;
+    //       case 3:
+    //         navigate(`/profile/${response.data.profileName}`);
+    //         break;
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setLoginState(false);
+    //     navigate(`/login`);
+    //   });
+    try {
+      const { data: currentUser } = await protect();
+      switch (parseInt(e.target.id)) {
+        case 0:
+          navigate("/");
+          break;
+        case 1:
+          const { data: history } = await showSearchHistory();
+          setUserList(history);
+          setIsDisplaySearch(true);
+          break;
+        case 2:
+          setIsDisplayEditor(true);
+          break;
+        case 3:
+          navigate(`/profile/${currentUser.profileName}`);
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+      navigate(`/login`);
+    }
 
     setCurrentPage(parseInt(e.target.id));
   };
@@ -83,6 +109,8 @@ function Sidebar({ children }) {
         <SearchUser
           isDisplaySearch={isDisplaySearch}
           setIsDisplaySearch={setIsDisplaySearch}
+          userList={userList}
+          setUserList={setUserList}
         />
       </div>
     </div>
