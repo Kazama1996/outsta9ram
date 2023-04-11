@@ -134,7 +134,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 exports.findUser = async (req, res, next) => {
   const userList = await User.find({
     profileName: { $regex: `^${req.params.profileName}\w*` },
-  }).limit(10);
+  })
+    .limit(10)
+    .select("-password -__v -_id -email -fullName -signature");
   if (!userList) {
     res.status(200).send([]);
   }

@@ -1,11 +1,19 @@
 import "./style/FollowerItem.css";
 import { useNavigate } from "react-router-dom";
+import { addSearchHistory } from "../global/api";
 function UserItem(props) {
   const { user, setDisplayUserList } = props;
   const navigate = useNavigate();
-  const handleClick = function (e) {
+  const handleClick = async function (e) {
     const targetName = e.target.outerText || e.target.parentElement.outerText;
+    const reqBody = {
+      avatar: user.avatar,
+      profileName: user.profileName,
+    };
+    const res = await addSearchHistory(JSON.stringify(reqBody));
+    console.log(res);
     navigate(`/profile/${targetName}`);
+
     setDisplayUserList(false);
   };
 

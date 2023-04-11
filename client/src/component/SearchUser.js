@@ -4,8 +4,8 @@ import { searchUser } from "../global/api";
 import UserItem from "./UserItem";
 import "./style/SearchUser.css";
 function SearchUser(props) {
-  const { isDisplaySearch, setIsDisplaySearch } = props;
-  const [userList, setUserList] = useState([]);
+  const { isDisplaySearch, setIsDisplaySearch, userList, setUserList } = props;
+
   const closeModal = function () {
     setIsDisplaySearch(false);
   };
@@ -29,7 +29,6 @@ function SearchUser(props) {
       {userList.map((item) => {
         return (
           <div>
-            {" "}
             <UserItem user={item} setDisplayUserList={setIsDisplaySearch} />
           </div>
         );

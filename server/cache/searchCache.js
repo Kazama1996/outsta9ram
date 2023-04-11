@@ -7,13 +7,17 @@ client.connect();
 
 exports.getSearchHistory = async (req, res, next) => {
   const history = await client.HGET(`${req.user}`, "history");
-  const splitArr = history.split(" ");
-  let objArr = [];
-  splitArr.forEach((el) => {
-    objArr.push(JSON.parse(el));
-  });
-  console.log(typeof history);
-  res.status(200).send(objArr);
+  if (history === null) {
+    res.status(200).send([]);
+  } else {
+    const splitArr = history.split(" ");
+    let objArr = [];
+    splitArr.forEach((el) => {
+      objArr.push(JSON.parse(el));
+    });
+    console.log(typeof history);
+    res.status(200).send(objArr);
+  }
 };
 
 exports.pushIntoQueue = async (req, res, next) => {
