@@ -8,6 +8,8 @@ const followerRouter = require("./router/followerRouter");
 const errorHandler = require("./utils/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
+require("./cache/profileCache");
 dotenv.config({
   path: "./config.env",
 });
@@ -20,7 +22,6 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-
 mongoose.connect(DB).then(
   () => {
     console.log("Database connection success");

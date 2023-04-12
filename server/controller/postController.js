@@ -1,6 +1,7 @@
 const Post = require("../model/postModel");
 const Like = require("../model/likeModel");
 const User = require("../model/userModel");
+const Review = require("../model/reviewModel");
 const AppError = require("../utils/appError");
 const mongoose = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
@@ -89,8 +90,8 @@ exports.getPostAttribute = async (req, res, next) => {
     Date.now(),
     { addSuffix: true }
   );
-
-  res.status(200).send(postAttribute);
+  console.log(postAttribute);
+  res.status(200).send(postAttribute[0]);
 };
 
 // for testing
@@ -100,4 +101,10 @@ exports.getAllPostByUser = async (req, res, next) => {
   });
   const allPostt = await Post.find({ userId: targetUser._id });
   res.status(200).send(allPostt);
+};
+
+exports.creatTest = async (req, res, next) => {
+  const newTest = await Review.create(req.body);
+  req.newData = newTest;
+  next();
 };
