@@ -23,14 +23,14 @@ function Profile() {
         const { data: userProfile } = await getUserProfile(
           window.location.pathname.split("/")[2]
         );
-        setUserProfile(userProfile[0]);
-        setPosts(userProfile[0].Posts);
+        setUserProfile(userProfile);
+        setPosts(userProfile.Posts);
         if (
           currentUser.profileName === window.location.pathname.split("/")[2]
         ) {
           setIsSameUser(true);
         } else {
-          setIsFollowed(userProfile[0].isFollowed);
+          setIsFollowed(userProfile.isFollowed);
           setIsSameUser(false);
         }
       } catch (err) {

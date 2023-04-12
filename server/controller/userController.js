@@ -96,8 +96,9 @@ exports.getUserProfile = async (req, res, next) => {
         isFollowed: 1,
       },
     },
-  ]);
-  res.status(200).send(profile);
+  ]).cache({ targetUser: req.params.profileName, hashKey: "profile" });
+
+  res.status(200).send(profile[0]);
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -156,3 +157,7 @@ exports.getReview = async (req, res, next) => {
   ]);
   res.status(200).send(reviewList);
 };
+
+exports.saveProfile = async (req, res, next) => {};
+
+exports.getProfile = async (req, res, next) => {};

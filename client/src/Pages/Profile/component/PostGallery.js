@@ -16,10 +16,9 @@ function PostGallery(props) {
     if (e.target.id) {
       setPostId(e.target.id);
       const { data: postAttribute } = await getPostAttribute(e.target.id);
-      console.log(postAttribute[0]);
       const comm = await getComment(e.target.id);
-      setIsLiked(postAttribute[0].isLiked);
-      setPostAttribute(postAttribute[0]);
+      setIsLiked(postAttribute.isLiked);
+      setPostAttribute(postAttribute);
       setCoumment(comm.data);
       setIsDisPlayPostWindow(true);
     }

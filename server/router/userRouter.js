@@ -17,6 +17,8 @@ const {
   updateMe,
   getReview,
   findUser,
+  saveProfile,
+  getProfile,
 } = require("../controller/userController");
 
 const userRouter = express.Router();
@@ -43,6 +45,7 @@ userRouter.post("/api/v1/search-history", protect, pushIntoQueue);
 // dev-test
 userRouter.get("/api/users", getAllUser);
 userRouter.get("/api/review/:page", protect, getReview);
-userRouter.get("/api/search", protect, getSearchHistory);
-userRouter.post("/api/search", protect, pushIntoQueue);
+
+userRouter.post("/api/test/profile/:profileName", protect, saveProfile);
+userRouter.get("/api/test/profile/:profileName", protect, getProfile);
 module.exports = userRouter;
