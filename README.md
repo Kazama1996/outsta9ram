@@ -11,7 +11,7 @@
 ## TODO
 
 - Server
-  1. cache data e.g. user searching history with redis
+  1. ~~cache data e.g. user searching history with redis~~
   2. Unit test with Mocha
   3. fetch post for feed page
 - Client
