@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const { createClient } = require("redis");
-const redisUrl = "redis://127.0.0.1:6379";
-const client = createClient(redisUrl);
+const redisUrl = "redis://redis:6379";
+const client = createClient({
+  lagacyMode: true,
+  url: redisUrl,
+});
 
 client.on("error", (err) => console.log("redis client error", err));
 client.connect();
@@ -31,6 +34,5 @@ mongoose.Aggregate.prototype.exec = async function () {
     `${this.hashKey}`,
     JSON.stringify(result[0])
   );
-  client.EXPIRE();
   return result;
 };
