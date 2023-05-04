@@ -1,14 +1,16 @@
-# outsta9ram-An instagram clone
+# outsta9ram
+
+A instagram like application, user can post picture and interact with other user by making comment or making a like to a post
 
 ## 1.Tools
 
 - ReactJS to render the UI.
-- ExpressJS to implement the backend router.
+- Express to implement the backend RESTful API.
 - Mongoose(A MongoDB ODM) to store the data e.g. user profile / follower / comment.
-- JWT in HTTP-only cookie to verify the user and protect the backend route.
+- JWT in HTTP-only cookie to verify the user and protect the backend api.
 - AWS S3 to save the post image and avatar, make this more scalable
 - Redis to cache the data which is often used
-- Dockerize the whole app use docker compose
+- Docker to containerize the whole app use docker compose
 
 ## 2.Useage
 
