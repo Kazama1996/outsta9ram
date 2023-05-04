@@ -11,7 +11,6 @@ function UserItem(props) {
       profileName: user.profileName,
     };
     const res = await addSearchHistory(JSON.stringify(reqBody));
-    console.log(res);
     navigate(`/profile/${targetName}`);
 
     setDisplayUserList(false);

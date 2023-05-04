@@ -90,7 +90,6 @@ exports.getPostAttribute = async (req, res, next) => {
     Date.now(),
     { addSuffix: true }
   );
-  console.log(postAttribute);
   res.status(200).send(postAttribute[0]);
 };
 

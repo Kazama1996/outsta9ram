@@ -26,7 +26,6 @@ function PostEditor(props) {
         const {
           data: { KEY, clientUrl },
         } = await getPreSignUrl();
-        console.log(KEY, clientUrl);
         await uploadImage(clientUrl, file);
         reqBody = {
           content: postContent.current.value,

@@ -24,7 +24,6 @@ mongoose.Aggregate.prototype.exec = async function () {
   }
   const cacheVal = await client.HGET(`${this.targetUser}`, `${this.hashKey}`);
   if (cacheVal) {
-    console.log(cacheVal);
     const doc = JSON.parse(cacheVal);
     return [doc];
   }

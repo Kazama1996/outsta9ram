@@ -3,7 +3,7 @@ services:
   mongodb:
     image:  "mongo"
     volumes:
-      - data:/data/db
+      - mongoData:/data/mongodb
     env_file:
       - ./server/config.env
   redis:
@@ -12,7 +12,7 @@ services:
       - "6379:6379"
     restart: always
     volumes:
-      - redis:/data/redis
+      - redisData:/data/redis
   server:
     build:
       context: ./server
@@ -38,5 +38,5 @@ services:
     stdin_open: true
     tty:  true
 volumes:
-  data:
-  redis:
+  mongoData:
+  redisData:

@@ -23,16 +23,18 @@ function PostWindow(props) {
   const inputComment = useRef(null);
 
   const subitComment = async function (e) {
+    console.log(postId);
     try {
       const reqBody = {
         content: inputComment.current.value,
+        postId: postId,
       };
-      await createComment(postId, reqBody);
+      console.log("reqbody:", reqBody);
+      await createComment(reqBody);
     } catch (err) {
       console.log(err);
     }
     setIsDisPlayPostWindow(false);
-    window.location.reload(true);
   };
 
   const handleLike = async function () {
@@ -56,7 +58,6 @@ function PostWindow(props) {
     setIsDisPlayPostWindow(false);
     const att = await getPostAttribute(postId);
     setPostAttribute(att.data[0]);
-    window.location.reload(true);
   };
   return (
     <Modal

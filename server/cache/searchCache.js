@@ -17,7 +17,6 @@ exports.getSearchHistory = async (req, res, next) => {
     splitArr.forEach((el) => {
       objArr.push(JSON.parse(el));
     });
-    console.log(typeof history);
     res.status(200).send(objArr);
   }
 };

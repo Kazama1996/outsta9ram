@@ -100,7 +100,6 @@ exports.forgotPassword = async (req, res, next) => {
   const resetURL = `${req.protocol}://${req.get(
     "host"
   )}/api/redirectPasswordReset/${resetToken}`;
-  console.log(resetURL);
 
   const message = `<p>Forgot your password ? Click <a href="${resetURL}">here</a> to reset your password. If you didn't forget your password, please ignore thie email</p>`;
   try {

@@ -19,7 +19,6 @@ function FollowerList(props) {
   const closeModal = function () {
     setIsOpenModal(false);
     setFollowerList([]);
-    window.location.reload(true);
   };
 
   const getFollower = async function () {
@@ -38,7 +37,6 @@ function FollowerList(props) {
       ? await getFollower()
       : await getFollowing();
     setFollowerList([...followerList, ...dataFromServer]);
-    console.log(dataFromServer.length);
     if (dataFromServer.length === 0 || dataFromServer.length < 20) {
       sethasMore(false);
     }

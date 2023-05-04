@@ -37,14 +37,14 @@ function ProfileHeader(props) {
   };
 
   const FollowUser = async function (e) {
+    console.log("follow");
     await followUser(window.location.pathname.split("/")[2]);
     setIsFollowed((current) => !current);
-    window.location.reload(true);
   };
   const unFollowUser = async function (e) {
+    console.log("unfollow");
     await unfollowUser(window.location.pathname.split("/")[2]);
     setIsFollowed((current) => !current);
-    window.location.reload(true);
   };
 
   return (
@@ -71,6 +71,7 @@ function ProfileHeader(props) {
           <h2 onClick={openFollowerList} className="followers">
             Followers:
             {userProfile.FollowerQuantity}
+            {console.log(userProfile)}
           </h2>
         </div>
         <div>

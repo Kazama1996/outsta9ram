@@ -38,7 +38,6 @@ function PasswordReset() {
   return (
     <Modal isOpen={true} className="popupWindow-login" ariaHideApp={false}>
       <h2>Fill your new password below and submit</h2>
-      {console.log(location)}
       <div>
         <InputField
           type={"password"}

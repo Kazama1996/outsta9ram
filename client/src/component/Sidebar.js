@@ -18,8 +18,6 @@ function Sidebar({ children }) {
     const storedCount = localStorage.getItem("currentPage");
     return storedCount ? parseInt(storedCount, 10) : 0;
   });
-  const [loginState, setLoginState] = useState(false);
-
   const navigate = useNavigate();
   useEffect(() => {
     localStorage.setItem("currentPage", currentPage);
@@ -100,18 +98,22 @@ function Sidebar({ children }) {
       </div>
       <div className="pages">
         <main>{children}</main>
-        <PostEditor
-          isDisplayEditor={isDisplayEditor}
-          setIsDisplayEditor={setIsDisplayEditor}
-          filePath={filePath}
-          setFilePath={setFilePath}
-        />
-        <SearchUser
-          isDisplaySearch={isDisplaySearch}
-          setIsDisplaySearch={setIsDisplaySearch}
-          userList={userList}
-          setUserList={setUserList}
-        />
+        {isDisplayEditor && (
+          <PostEditor
+            isDisplayEditor={isDisplayEditor}
+            setIsDisplayEditor={setIsDisplayEditor}
+            filePath={filePath}
+            setFilePath={setFilePath}
+          />
+        )}
+        {isDisplaySearch && (
+          <SearchUser
+            isDisplaySearch={isDisplaySearch}
+            setIsDisplaySearch={setIsDisplaySearch}
+            userList={userList}
+            setUserList={setUserList}
+          />
+        )}
       </div>
     </div>
   );
