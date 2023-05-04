@@ -30,7 +30,6 @@ function ProfileEditor(props) {
         const {
           data: { KEY, clientUrl },
         } = await getPreSignUrl();
-        console.log(KEY, clientUrl);
         await uploadImage(clientUrl, avatar);
         // reqbody add avatar .
         reqBody.avatar = KEY;

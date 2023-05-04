@@ -48,16 +48,18 @@ function PostGallery(props) {
           </div>
         );
       })}
-      <PostWindow
-        isDisplayPostWindow={isDisplayPostWindow}
-        setIsDisPlayPostWindow={setIsDisPlayPostWindow}
-        postAttrubute={postAttrubute}
-        setPostAttribute={setPostAttribute}
-        comment={comment}
-        postId={postId}
-        isLiked={isLiked}
-        setIsLiked={setIsLiked}
-      />
+      {isDisplayPostWindow && (
+        <PostWindow
+          isDisplayPostWindow={isDisplayPostWindow}
+          setIsDisPlayPostWindow={setIsDisPlayPostWindow}
+          postAttrubute={postAttrubute}
+          setPostAttribute={setPostAttribute}
+          comment={comment}
+          postId={postId}
+          isLiked={isLiked}
+          setIsLiked={setIsLiked}
+        />
+      )}
     </div>
   );
 }

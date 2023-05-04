@@ -96,7 +96,8 @@ exports.getUserProfile = async (req, res, next) => {
         isFollowed: 1,
       },
     },
-  ]).cache({ targetUser: req.params.profileName, hashKey: "profile" });
+  ]);
+  // ]).cache({ targetUser: req.params.profileName, hashKey: "profile" });
 
   res.status(200).send(profile[0]);
 };

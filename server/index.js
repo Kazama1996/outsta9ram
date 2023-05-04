@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const postRouter = require("./router/postRouter");
 const userRouter = require("./router/userRouter");
@@ -10,9 +9,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 require("./cache/profileCache");
-dotenv.config({
-  path: "./config.env",
-});
 
 const DB = process.env.DB.replace("<password>", process.env.DB_PASSWORD);
 const app = express();

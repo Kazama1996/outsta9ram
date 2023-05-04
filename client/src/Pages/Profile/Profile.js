@@ -12,10 +12,6 @@ function Profile() {
   const [isFollowed, setIsFollowed] = useState(false);
   const location = useLocation();
 
-  const handleClick = function (e) {
-    // pop up the postWindow
-    console.log(e.target.id);
-  };
   useEffect(() => {
     async function fetchProfile() {
       try {
