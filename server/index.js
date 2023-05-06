@@ -7,7 +7,12 @@ const followerRouter = require("./router/followerRouter");
 const errorHandler = require("./utils/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const path = require("path");
 
+dotenv.config({
+  path: path.join(__dirname, "/config.env"),
+});
 require("./cache/profileCache");
 
 const DB = process.env.DB.replace("<password>", process.env.DB_PASSWORD);
@@ -33,6 +38,10 @@ app.use(commentRouter);
 app.use(followerRouter);
 
 app.use(errorHandler);
+
 app.listen(process.env.PORT, () => {
+  console.log(`env is ${process.env.ENV}`);
   console.log(`listen to port ${process.env.PORT}`);
 });
+
+module.exports = app;
