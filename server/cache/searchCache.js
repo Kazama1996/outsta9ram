@@ -1,5 +1,6 @@
 const { createClient } = require("redis");
-const redisUrl = "redis://redis:6379";
+//const redisUrl = "redis://redis:6379";
+const redisUrl = "redis://127.0.0.1:6379";
 const client = createClient({
   lagacyMode: true,
   url: redisUrl,
