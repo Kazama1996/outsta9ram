@@ -24,11 +24,8 @@ function Sidebar({ children }) {
   }, [currentPage]);
 
   const handleClick = async function (e) {
-    console.log("asdasd");
     try {
-      console.log("asdfasdf");
       const { data: currentUser } = await protect();
-      console.log("aaaaaaaa", currentUser);
       switch (parseInt(e.target.id)) {
         case 0:
           navigate("/");

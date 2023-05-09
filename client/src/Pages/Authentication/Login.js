@@ -15,7 +15,7 @@ function Login(props) {
     };
     await login(JSON.stringify(reqBody))
       .then((response) => {
-        navigate(`/profile/${response.data.profileName}`);
+        navigate(`/profile/${response.data.user.profileName}`);
       })
       .catch((error) => {
         navigate("/login");
