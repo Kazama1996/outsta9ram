@@ -79,11 +79,11 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   const user = await User.findOne({ email: email });
   if (!user) {
-    return next(new AppError("User with this email could not found", 401));
+    return next(new AppError("Invalid email or password", 401));
   }
 
   if (!(await bcrypt.compare(password, user.password))) {
-    return next(new AppError("Invalid email or password", 400));
+    return next(new AppError("Invalid email or password", 401));
   }
   setJWTCookie(200, user, res, "login");
 });

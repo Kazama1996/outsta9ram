@@ -7,14 +7,18 @@ const authController = require(path.join(
   "../controller/authController"
 ));
 const app = require("../index.js");
+const { useAsyncValue } = require("react-router-dom");
+const { triggerAsyncId } = require("async_hooks");
 
 describe("Unit test of authController:", () => {
+  before(async function () {
+    console.log("delete User Data base");
+    await User.deleteMany();
+  });
+  after(async function () {
+    await User.deleteMany();
+  });
   describe("Signup Function", (done) => {
-    before(async function () {
-      console.log("delete User Data base");
-      await User.deleteMany();
-    });
-
     it("Signup success if user input correct information without any duplicate field.", (done) => {
       const testProfile = {
         email: "testMocha@gmail.com",
@@ -56,6 +60,7 @@ describe("Unit test of authController:", () => {
           done();
         });
     });
+
     it("Signup failed if user user duplicate profileName.", (done) => {
       const testProfile = {
         email: "someOne@gmail.com",
@@ -76,6 +81,67 @@ describe("Unit test of authController:", () => {
           );
         });
       done();
+    });
+  });
+  describe("Login Function", (done) => {
+    before(async function () {
+      await User.deleteMany();
+
+      const testProfile = {
+        email: "testMocha@gmail.com",
+        fullName: "testMocha",
+        profileName: "testMocha",
+        password: "admin123",
+      };
+      await User.create(testProfile);
+    });
+    it("Login success if user give a correct email and password", (done) => {
+      const loginProfile = {
+        email: "testMocha@gmail.com",
+        password: "admin123",
+      };
+      request(app)
+        .post("/api/v1/auth/login")
+        .set("Accept", "application/json")
+        .send(loginProfile)
+        .end(function (err, res) {
+          if (err) done(err);
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, "Login success");
+          done();
+        });
+    });
+    it("Login fail if user give incorrect email or password", (done) => {
+      const loginProfile = {
+        email: "wrong@gmail.com",
+        password: "admin123",
+      };
+      request(app)
+        .post("/api/v1/auth/login")
+        .set("Accept", "application/json")
+        .send(loginProfile)
+        .end(function (err, res) {
+          if (err) done(err);
+          assert.equal(res.status, 401);
+          assert.equal(res.body.message, "Invalid email or password");
+          done();
+        });
+    });
+    it("Login fail if user login without email or password ", (done) => {
+      const loginProfile = {
+        email: "",
+        password: "admin123",
+      };
+      request(app)
+        .post("/api/v1/auth/login")
+        .set("Accept", "application/json")
+        .send(loginProfile)
+        .end(function (err, res) {
+          if (err) done();
+          assert.equal(res.status, 400);
+          assert.equal(res.body.message, "Invalid email or password");
+          done();
+        });
     });
   });
 });
