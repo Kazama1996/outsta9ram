@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const { promisify } = require("util");
 const sendEmail = require("../utils/email");
-const { redirect } = require("react-router-dom");
 
 const generateJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -15,9 +14,9 @@ const generateJWT = (id) => {
   });
 };
 
-const setJWTCookie = function (statusCode, user, res, isReset = false) {
+const setJWTCookie = function (statusCode, user, res, caller = "") {
   const token = generateJWT(user._id);
-
+  let message = "";
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIREIN * 24 * 60 * 60 * 1000
@@ -27,17 +26,50 @@ const setJWTCookie = function (statusCode, user, res, isReset = false) {
     sameSite: "None",
   };
   user.password = undefined;
-
+  switch (caller) {
+    case "signup":
+      message = "Regist success";
+      break;
+    case "login":
+      message = "Login success";
+      break;
+    case "updatePassword":
+      message = "Your password is updated successfully.";
+      break;
+  }
   res.cookie("jwt", token, cookieOptions);
-  res.status(statusCode).send(user);
+  res.status(statusCode).json({ message: message });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const userProfileName = await User.findOne({
+    profileName: req.body.profileName,
+  });
+
+  if (userProfileName) {
+    return next(
+      new AppError(
+        "The profileName you're trying to add, has been registered as an account already",
+        401
+      )
+    );
+  }
+  const userEmail = await User.findOne({ email: req.body.email });
+
+  if (userEmail) {
+    return next(
+      new AppError(
+        "The email you're trying to add, has been registered as an account already",
+        401
+      )
+    );
+  }
+
   const newUser = await User.create({
     ...req.body,
     avatar: process.env.AWS_S3BUCKET_URL + "default/Avatar.png",
   });
-  setJWTCookie(201, newUser, res);
+  setJWTCookie(201, newUser, res, "signup");
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -47,13 +79,13 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   const user = await User.findOne({ email: email });
   if (!user) {
-    return next(new AppError("User with this email could not found", 401));
+    return next(new AppError("Invalid email or password", 401));
   }
 
   if (!(await bcrypt.compare(password, user.password))) {
-    return next(new AppError("Invalid email or password", 400));
+    return next(new AppError("Invalid email or password", 401));
   }
-  setJWTCookie(200, user, res);
+  setJWTCookie(200, user, res, "login");
 });
 
 exports.protect = async (req, res, next) => {
@@ -175,10 +207,10 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // set the password Reset token to undefined.
   user.passwordResetToken = undefined;
   user.passwordResetExpire = undefined;
-  user.change;
   await user.save({ validateBeforeSave: false });
-  res.clearCookie("PWDReset").send("you are log out");
-  setJWTCookie(200, user, res);
+  res
+    .clearCookie("PWDReset")
+    .json({ message: "Your password is reset! Please Login again!!" });
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -188,7 +220,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   }
   user.password = req.body.password;
   await user.save({ validateBeforeSave: false });
-  setJWTCookie(200, user, res);
+  setJWTCookie(200, user, res, "updatePassword");
 });
 
 exports.logout = catchAsync(async (req, res, next) => {
@@ -205,5 +237,9 @@ exports.logout = catchAsync(async (req, res, next) => {
 });
 
 exports.result = (req, res, next) => {
+  req.user.password = undefined;
+  req.user.__v = undefined;
+  req.user.email = undefined;
+  req.user.fullName = undefined;
   res.status(200).send(req.user);
 };
