@@ -125,13 +125,12 @@ exports.forgotPassword = async (req, res, next) => {
   if (!user) {
     return next(new AppError("User with this email could not found", 404));
   }
-
   //if so, send an reset password token
   const resetToken = user.createPasswordResetToken();
   await user.save({ validatebeforeSave: false });
   const resetURL = `${req.protocol}://${req.get(
     "host"
-  )}/api/redirectPasswordReset/${resetToken}`;
+  )}/api/v1/auth/redirect-reset-password/${resetToken}`;
 
   const message = `<p>Forgot your password ? Click <a href="${resetURL}">here</a> to reset your password. If you didn't forget your password, please ignore thie email</p>`;
   try {
