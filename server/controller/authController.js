@@ -237,5 +237,9 @@ exports.logout = catchAsync(async (req, res, next) => {
 });
 
 exports.result = (req, res, next) => {
+  req.user.password = undefined;
+  req.user.__v = undefined;
+  req.user.email = undefined;
+  req.user.fullName = undefined;
   res.status(200).send(req.user);
 };
