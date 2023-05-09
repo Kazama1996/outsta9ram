@@ -38,7 +38,7 @@ const setJWTCookie = function (statusCode, user, res, caller = "") {
       break;
   }
   res.cookie("jwt", token, cookieOptions);
-  res.status(statusCode).json({ message: message });
+  res.status(statusCode).json({ message: message, user: user });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -241,5 +241,6 @@ exports.result = (req, res, next) => {
   req.user.__v = undefined;
   req.user.email = undefined;
   req.user.fullName = undefined;
+  console.log(req.user);
   res.status(200).send(req.user);
 };

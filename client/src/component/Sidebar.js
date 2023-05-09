@@ -24,29 +24,6 @@ function Sidebar({ children }) {
   }, [currentPage]);
 
   const handleClick = async function (e) {
-    // await protect()
-    //   .then((response) => {
-    //     switch (parseInt(e.target.id)) {
-    //       case 0:
-    //         navigate("/");
-    //         break;
-    //       case 1:
-    //         const res = showSearchHistory();
-    //         console.log(res);
-    //         setIsDisplaySearch(true);
-    //         break;
-    //       case 2:
-    //         setIsDisplayEditor(true);
-    //         break;
-    //       case 3:
-    //         navigate(`/profile/${response.data.profileName}`);
-    //         break;
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setLoginState(false);
-    //     navigate(`/login`);
-    //   });
     try {
       const { data: currentUser } = await protect();
       switch (parseInt(e.target.id)) {
