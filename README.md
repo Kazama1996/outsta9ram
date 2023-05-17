@@ -47,6 +47,7 @@ When you finish all instructions above, go to your browser and type "localhost:3
 ## 3.Database Design
 
 This is the blueprint of my database design.
+
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Database%20Design.png)
 
 ## 4.Store the User searching history via redis
