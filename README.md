@@ -47,6 +47,10 @@ When you finish all instructions above, go to your browser and type "localhost:3
 ## 3.Database Design
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Database%20Design.png)
 
+## 4.
+I use redis to design the Queue-Set to store the history of searching user, In this data structure, it contains a queue to store the history of user searching, and use set to avoiding the duplicate item. Here is my flowchart of this data structure.   
+![image](https://github.com/Kazama1996/outsta9ram/blob/main/Queue-Set%20blueprint.png)
+
 ## 4.TODO
 
 - Server
