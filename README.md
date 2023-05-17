@@ -44,7 +44,10 @@ If you don't have docker compose, Go to [this](https://linux.how2shout.com/insta
 
 When you finish all instructions above, go to your browser and type "localhost:3000" in the URL bar, then you can enjoy ~~
 
-## 3.TODO
+## 3.Database Design
+![image](https://github.com/Kazama1996/outsta9ram/blob/main/Database%20Design.png)
+
+## 4.TODO
 
 - Server
   1. ~~cache data e.g. user searching history with redis~~
