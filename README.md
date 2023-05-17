@@ -45,13 +45,16 @@ If you don't have docker compose, Go to [this](https://linux.how2shout.com/insta
 When you finish all instructions above, go to your browser and type "localhost:3000" in the URL bar, then you can enjoy ~~
 
 ## 3.Database Design
+
+This is the blueprint of my database design.
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Database%20Design.png)
 
-## 4.
+## 4.Store the User searching history via redis
+
 I use redis to design the Queue-Set to store the history of searching user, In this data structure, it contains a queue to store the history of user searching, and use set to avoiding the duplicate item. Here is my flowchart of this data structure.   
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Queue-Set%20blueprint.png)
 
-## 4.TODO
+## 5.TODO
 
 - Server
   1. ~~cache data e.g. user searching history with redis~~
