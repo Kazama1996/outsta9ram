@@ -1,6 +1,6 @@
 # outsta9ram
 
-A instagram like application, user can post picture and interact with other user by making comment or making a like to a post
+A instagram like application, user can post picture and interact with other user by making comment or  like to a post
 
 ## 1.Tools
 
@@ -10,7 +10,7 @@ A instagram like application, user can post picture and interact with other user
 - JWT in HTTP-only cookie to verify the user and protect the backend api.
 - AWS S3 to save the post image and avatar, make this more scalable
 - Redis to cache the data which is often used
-- Docker to containerize the whole app use docker compose
+- Docker to containerize the whole app use docker compose.
 
 ## 2.Useage
 
@@ -46,13 +46,13 @@ When you finish all instructions above, go to your browser and type "localhost:3
 
 ## 3.Database Design
 
-This is the blueprint of my database design.
+This is the blueprint of the database design.
 
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Database%20Design.png)
 
 ## 4.Store the User searching history via redis
 
-I use redis to design the Queue-Set to store the history of searching user, In this data structure, it contains a queue to store the history of user searching, and use set to avoiding the duplicate item. Here is my flowchart of this data structure.   
+Use redis to implement the Queue-Set to store the history of individual user searching , In this data structure, it contains a queue to store the history of user searching, and use set to avoiding the duplicate item. Here is my flowchart of this data structure.   
 ![image](https://github.com/Kazama1996/outsta9ram/blob/main/Queue-Set%20blueprint.png)
 
 ## 5.TODO
