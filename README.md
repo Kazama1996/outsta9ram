@@ -62,6 +62,8 @@ Use redis to implement the Queue-Set to store the history of individual user sea
   2. Unit test with Mocha
   3. fetch post for feed page
   4. ~~Dockerize the whole app use docker compose~~
+  5. implement the tag feature, you can tag your friend in your post.
+  6. implement the geographic information of a post (Maybe call 3rd api e.g. google map).
 - Client
   1. Feed Page for the post
   2. refactor the all css
