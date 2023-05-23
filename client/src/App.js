@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import Login from "./Pages/Authentication/Login";
 import Feed from "./Pages/Feed/Feed";
-import "./App.css";
+// import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./component/Sidebar";
 import Profile from "./Pages/Profile/Profile";

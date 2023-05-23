@@ -1,0 +1,66 @@
+.header-profile{
+    display: flex;
+    width:80vw;
+    height:20vh;
+  }
+  .avatar-region{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:20px;
+  }
+  .userPhoto{
+    width:150px;
+    height:150px;
+    border-radius: 99em;
+  }
+  .user-info{
+    flex:1;
+    display: grid;
+    height:100%;
+    flex-direction: column;
+    /* width:75%; */
+  }
+  .post-and-followers h2{
+    display: inline-block;
+    margin-right: 20px;
+  }
+  .post-and-followers h2:last-child{
+    display: inline-block;
+    margin-right:0;
+  }
+
+
+  .profileName-and-seting{
+    font-size: 40px;
+    display: flex;
+   }
+   .frofileName-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .setting-container{
+    width:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }  
+
+   .profileName-and-seting img{
+    width:25px;
+    height:25px;
+
+   }
+
+   .profileName-and-seting img:hover{
+    cursor: pointer;
+  }
+  .following:hover{
+    cursor: pointer;
+  }
+  
+  .followers:hover{
+    cursor: pointer;
+  }

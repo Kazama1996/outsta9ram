@@ -39,7 +39,6 @@ function PostWindow(props) {
 
   const handleLike = async function () {
     let res = "";
-
     try {
       if (isLiked) {
         res = await cancelLike(postId);
@@ -74,7 +73,7 @@ function PostWindow(props) {
           backgroundImage: `url(${postAttrubute.photoPath})`,
         }}
       ></div>
-      <div className="property">
+      {/* <div className="property">
         <div className="user">
           <div
             className="avatar-user"
@@ -110,8 +109,7 @@ function PostWindow(props) {
           />
           <button onClick={subitComment}>publish</button>
         </div>
-      </div>
-      <div></div>
+      </div> */}
     </Modal>
   );
 }

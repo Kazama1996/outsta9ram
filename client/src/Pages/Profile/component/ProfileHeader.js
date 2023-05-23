@@ -1,5 +1,5 @@
 import gear from "../../../material/setting.png";
-import "../style/PostHeader.css";
+import "../style/ProfileHeader.css";
 import SettingMenu from "./SettingMenu";
 import { useState } from "react";
 import {
@@ -54,9 +54,13 @@ function ProfileHeader(props) {
       </div>
       <div className="user-info">
         <div className="profileName-and-seting">
-          {window.location.pathname.split("/")[2]}
+          <div class="frofileName-container">
+            {window.location.pathname.split("/")[2]}
+          </div>
           {isSameUser ? (
-            <img src={gear} onClick={openSetting} />
+            <div class="setting-container">
+              <img src={gear} onClick={openSetting} />
+            </div>
           ) : isFollowed ? (
             <button onClick={unFollowUser}>unFollow</button>
           ) : (

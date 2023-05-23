@@ -1,4 +1,3 @@
-import "../../App.css";
 import { getUserProfile, protect } from "../../global/api";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";

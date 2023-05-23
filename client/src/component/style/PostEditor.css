@@ -1,9 +1,11 @@
 .editor-post{
     display: flex;
-    position: absolute;
-    width:600px;
-    height:400px;
+    /* position: absolute; */
+     width:600px;
+    height:400px; 
     background-color: green;
+    margin: 25vh auto;
+
   }
 
   .window-preview{

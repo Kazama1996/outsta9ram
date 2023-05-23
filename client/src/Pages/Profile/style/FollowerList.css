@@ -4,4 +4,6 @@
     width:200px;
     height:400px;
     overflow-y: auto;
+    margin: 25vh auto;
+
 }

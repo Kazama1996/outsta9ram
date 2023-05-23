@@ -5,13 +5,16 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.3);
+
   }
   .menu-setting{
     display: flex;
     justify-content: center;
     width:200px;
     height:400px;
-    background-color:floralwhite
+    background-color:floralwhite;
+    margin: 25vh auto;
+
   }
 .btns div{
     margin-top: 30px;

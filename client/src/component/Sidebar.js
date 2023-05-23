@@ -7,6 +7,7 @@ import search from "../material/search.png";
 import { protect, showSearchHistory } from "../global/api";
 import { useNavigate } from "react-router-dom";
 import SearchUser from "./SearchUser";
+import "./style/Sidebar.css";
 
 function Sidebar({ children }) {
   const [filePath, setFilePath] = useState("");
@@ -75,22 +76,26 @@ function Sidebar({ children }) {
       </div>
       <div className="pages">
         <main>{children}</main>
-        {isDisplayEditor && (
-          <PostEditor
-            isDisplayEditor={isDisplayEditor}
-            setIsDisplayEditor={setIsDisplayEditor}
-            filePath={filePath}
-            setFilePath={setFilePath}
-          />
-        )}
-        {isDisplaySearch && (
-          <SearchUser
-            isDisplaySearch={isDisplaySearch}
-            setIsDisplaySearch={setIsDisplaySearch}
-            userList={userList}
-            setUserList={setUserList}
-          />
-        )}
+        <div>
+          {isDisplayEditor && (
+            <PostEditor
+              isDisplayEditor={isDisplayEditor}
+              setIsDisplayEditor={setIsDisplayEditor}
+              filePath={filePath}
+              setFilePath={setFilePath}
+            />
+          )}
+        </div>
+        <div>
+          {isDisplaySearch && (
+            <SearchUser
+              isDisplaySearch={isDisplaySearch}
+              setIsDisplaySearch={setIsDisplaySearch}
+              userList={userList}
+              setUserList={setUserList}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

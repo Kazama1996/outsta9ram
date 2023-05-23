@@ -1,20 +1,19 @@
 .window-post{
-    display: flex;
+    display: block;
     position: absolute;
-    background-color: floralwhite;
-    top: 30px;
-    left: 150px;
-    right: 150px;
-    bottom: 30px;
+    width:100vw;
+    height: 600px;
+    /* background-color: red; */
   }
-  .window-post-overlay{
-    position: fixed;
+   .window-post-overlay{
+     position: fixed;
     top:0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 0; 
     background-color: rgba(0, 0, 0, .6);
   }
+  /*
   .image{
     width:75%;
     height:100%;
@@ -66,4 +65,4 @@
   }
 
   
-  
+   */
