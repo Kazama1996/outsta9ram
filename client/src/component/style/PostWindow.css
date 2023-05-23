@@ -1,32 +1,42 @@
 .window-post{
-    display: block;
+    display: flex;
     position: absolute;
-    width:100vw;
-    height: 600px;
-    /* background-color: red; */
+    width:70vw;
+    height: 80vh;
+    background-color: #f7f7f7; 
+    margin: 10vh 10vw; 
   }
-   .window-post-overlay{
-     position: fixed;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0; 
-    background-color: rgba(0, 0, 0, .6);
-  }
-  /*
+
   .image{
-    width:75%;
+    width:55%;
     height:100%;
     background-repeat: no-repeat;  
     background-position: 0% 0%;
     background-size: 100% 100%;
   }
-
+  .property{
+    width: 45%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 2fr 0.5fr 0.2fr;
+  }
   .user{
     display: flex;
-    height:5%;
-    padding-bottom: 15px;
-    font-size: 40px;
+    align-items: center;
+    gap:10px;
+  }
+  .content{
+    padding: 1px 0;
+    max-width: 50ch;
+    overflow-y: auto;
+    background: transparent;
+    }
+
+
+  .btn-like{
+    display: flex;
+    width: 50px;
+    height: 50px;
   }
   .avatar-user{
     width:50px;
@@ -36,33 +46,26 @@
     background-size: 100% 100%;
     border-radius: 50%;
   }
-  .content{
-    padding-top: 30px;
-    padding-bottom: 30px;
-    max-width: 50ch;
-    overflow-y: auto;
-    height: 150px; 
-    background: transparent;
-    }
   .comment{
-    height:50%;
+    margin-top: 8px;
     overflow-y: auto;
   }
-
   .editor-comment{
     display: flex;
   }
-  .btn-like{
-    display: flex;
-    width: 50px;
-    height: 50px;
-  }
-
-  .input-content{
-    width:100%;
-    height:25x;
-    font-size: 25px;
-  }
-
   
-   */
+  .editor-comment input{
+    flex:1;
+    font-size: 25px;
+    border: none;
+    outline: none;
+    background-color: #f7f7f7;
+  }
+
+  .editor-comment button{
+    border: none;
+    outline: none;
+    background-color: #f7f7f7;
+    cursor: pointer;
+  }
+ 
