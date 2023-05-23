@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import PostWindow from "../../../component/PostWindow";
 import { getPostAttribute, getComment } from "../../../global/api";
 import "../style/PostGallery.css";
-import heart from "../../../material/like.png";
-import commentWhite from "../../../material/comment.png";
+import heart from "../../../material/heart.png";
+import commentWhite from "../../../material/comment (1).png";
 function PostGallery(props) {
   const posts = props.posts;
   const [isDisplayPostWindow, setIsDisPlayPostWindow] = useState(false);
@@ -38,12 +38,10 @@ function PostGallery(props) {
             key={post._id}
           >
             <div className="overlay" id={post._id}>
-              <div>
-                <img src={heart} className="img-like" />
-              </div>
-              <div>
-                <img src={commentWhite} className="img-comment" />
-              </div>
+              <img src={heart} className="img-like" />
+              <p>{post.LikeQuantity}</p>
+              <img src={commentWhite} className="img-comment" />
+              <p>{post.CommentQuantity}</p>
             </div>
           </div>
         );

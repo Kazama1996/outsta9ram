@@ -22,21 +22,29 @@
   .overlay{
     display: flex;
     justify-content: center;
+    color:aliceblue;
     align-items: center;
     opacity: 0;
     width: 100%;
     height: 100%;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
+    gap:20px;
+    font-size: 30px;
   }
 
+
+
   .img-like{
-    width:50px;
-    height:50px;
+    width:10%;
+    height:10%;
+    filter:invert(100%);
+
   }
 
   .img-comment{
-    width:50px;
-    height:50px;
+    filter:invert(100%);
+    width:10%;
+    height:10%;
   }
   
