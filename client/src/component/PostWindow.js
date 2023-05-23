@@ -62,7 +62,7 @@ function PostWindow(props) {
     <Modal
       isOpen={isDisplayPostWindow}
       className="window-post"
-      overlayClassName="window-post-overlay"
+      overlayClassName="editor-post-overlay"
       ariaHideApp={false}
       shouldCloseOnOverlayClick={true}
       onRequestClose={closeModal}
@@ -73,7 +73,7 @@ function PostWindow(props) {
           backgroundImage: `url(${postAttrubute.photoPath})`,
         }}
       ></div>
-      {/* <div className="property">
+      <div className="property">
         <div className="user">
           <div
             className="avatar-user"
@@ -83,7 +83,7 @@ function PostWindow(props) {
           ></div>
           {postAttrubute.author}
         </div>
-        <div className="content">{postAttrubute.content}</div>
+        <p className="content">{postAttrubute.content}</p>
         <div className="comment">
           {comment.map((el, index) => {
             return (
@@ -101,15 +101,16 @@ function PostWindow(props) {
           </div>
           <div>{postAttrubute.createdAt}</div>
         </div>
+
         <div className="editor-comment">
           <InputField
             placeholder={"Leave a comment "}
-            className={"input-content"}
+            // className={"input-content"}
             reference={inputComment}
           />
           <button onClick={subitComment}>publish</button>
         </div>
-      </div> */}
+      </div>
     </Modal>
   );
 }
