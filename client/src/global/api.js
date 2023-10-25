@@ -20,7 +20,7 @@ export const protect = async function () {
   return instance.get("/api/v1/auth/route-protection", customConfig);
 };
 export const forgotPassword = function (data) {
-  return instance.post("/api/v1/auth/forgotPassword", data, customConfig);
+  return instance.post("/api/v1/auth/forgot-password", data, customConfig);
 };
 export const resetPassword = function (data) {
   return instance.patch("/api/v1/auth/reset-password", data, customConfig);
